@@ -41,6 +41,12 @@ body {
   border-radius: 5px;
 }
 
+div.product-box:hover div.index-price {
+  width: 110px;
+  height: 110px;
+  margin-top: -41px;
+}
+
 .product-box img {
   margin-top: -100px;
 }
@@ -65,7 +71,7 @@ body {
   margin-top: -31px;
   margin-left: 134px;
   border-top-right-radius: 5px;
-  background-image: linear-gradient(45deg, #ffffff 50%, #5cb85c 50%);
+  background-image: linear-gradient(45deg, rgba(255,255,255,0) 50%, #5cb85c 50%);
 }
 
 .index-price h2 {
