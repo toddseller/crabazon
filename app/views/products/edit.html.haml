@@ -7,13 +7,9 @@
         .col-lg-4
           %img{:alt => "#{@product.name} Image", :src => @product.product_image}
         .col-lg-8.form-center
-          - if @product.errors.any?
-            %h3
-              = pluralize(@product.errors.count, 'error')
-              prohibited this product from being saved:
-            %ul
-              - @product.errors.full_messages.each do |error|
-                %li= error
+          - if flash[:error]
+            #flash.error
+              = flash[:error]
           .form-group
             = f.label :product_image, 'Product url:', class: 'col-lg-4 control-label'
             .col-md-8
