@@ -6,8 +6,11 @@
 .container
   .row
     .col-sm-12
-      %h1.text-center.index-header Welcome to our store!
+      %h1.text-center.index-header Welcome! Please see your products below
     .col-sm-12
+      - if flash[:success]
+        #flash.success
+          = flash[:success]
       - @products.each do |product|
         .col-lg-3.pull-left.clear-fix.index-product
           .product-box
