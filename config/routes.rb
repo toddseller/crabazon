@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   
   root 'index#index'
 
+  get 'index' => 'index#index', as: :index
+
 end

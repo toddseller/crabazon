@@ -1,3 +1,7 @@
+%nav.navbar.navbar-default.navbar-fixed-top
+  .container-fluid
+    .nav.navbar-nav.navbar-right
+      = link_to 'Product List', admin_index_path, class: 'btn btn-default navbar-btn add-product'
 .container
   .row
     .col-lg-12
@@ -5,7 +9,7 @@
         %h1.text-center.edit-header Add New Product
         .form-center
           - if flash[:error]
-            #flash.error
+            #flash.error.text-center
               = flash[:error]
           .form-group
             = f.label :product_image, 'Image url:', class: 'col-lg-4 control-label'

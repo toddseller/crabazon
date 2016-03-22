@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     if @product.save
-      flash[:success] = "Product successfully saved!"
+      flash[:success] = "Product successfully created!"
       redirect_to "/admin"
     else
       flash[:error] = @product.errors.full_messages.to_sentence
