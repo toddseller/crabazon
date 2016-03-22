@@ -13,15 +13,14 @@ RSpec.describe ProductsController, type: :controller do
     end
   end
   describe 'GET #edit' do 
+    let(:product) {Product.create!(name: Faker::Beer.name, description: Faker::Hipster.sentence, price: Faker::Commerce.price, quantity: Faker::Number.between(1,20), product_image: Faker::Avatar.image, reseller_id: 1 ) }
     it 'assigns the requested product to @product' do 
-      product = create(:product)
-      get :edit, id: product
-      expect(assigns(:contact)).to eq contact
+      get :edit, id: product.id
+      expect(assigns(:product)).to eq product
     end
 
     it 'renders the :edit template' do 
-      product = create(:product)
-      get :edit, id: product
+      get :edit, id: product.id
       expect(response).to render_template :edit
     end
   end
