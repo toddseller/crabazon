@@ -1,8 +1,7 @@
 %nav.navbar.navbar-default.navbar-fixed-top
   .container-fluid
     .nav.navbar-nav.navbar-right
-      = link_to new_product_path, class: 'btn btn-success navbar-btn add-product' do
-        %i.glyphicon.glyphicon-plus &nbsp;New
+      = link_to 'Admin Login', admin_index_path, class: 'btn btn-success navbar-btn add-product'
 .container
   .row
     .col-sm-12
@@ -21,7 +20,5 @@
                 %p= product.description
               %p
                 Qty: #{product.quantity}
-              = link_to 'Edit', edit_product_path(product), class: 'btn btn-primary pull-right index-edit'
-
 
 

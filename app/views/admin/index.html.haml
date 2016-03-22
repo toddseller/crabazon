@@ -1,0 +1,23 @@
+%nav.navbar.navbar-default.navbar-fixed-top
+  .container-fluid
+    .nav.navbar-nav.navbar-right
+      = link_to new_product_path, class: 'btn btn-success navbar-btn add-product' do
+        %i.glyphicon.glyphicon-plus &nbsp;New
+.container
+  .row
+    .col-sm-12
+      %h1.text-center.index-header Your Inventory!
+      %table.table.table-striped.table-border
+        %thead
+          %tr
+            %th Product Name
+            %th.text-center Price
+            %th.text-center Quantity
+        %tbody
+          - @products.each do |product|
+            %tr
+              %td= product.name
+              %td.text-center= product.price
+              %td.text-center= product.quantity
+              %td.text-center= link_to 'Edit', edit_product_path(product), class: 'btn btn-primary'
+
