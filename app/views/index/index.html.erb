@@ -1,0 +1,20 @@
+<div>
+Home
+</div>
+
+
+<h2>Welcome to our store!</h2>
+
+<h5><%= link_to 'Create a new product', new_product_path %></h5>
+
+<div>Here are all of your products:
+</div>
+
+<% @products.each do |product| %>
+  <img src="<%=product.product_image%>"/><br>
+  <%= product.name%><br>
+  <%= product.description%><br>
+  $<%= product.price%><br>
+  Quantity: <%= product.quantity%><br>
+  <%= link_to 'Edit', edit_product_path(product) %><br>
+<% end %>
