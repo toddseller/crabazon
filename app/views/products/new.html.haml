@@ -1,3 +1,7 @@
+%nav.navbar.navbar-default.navbar-fixed-top
+  .container-fluid
+    .nav.navbar-nav.navbar-right
+      = link_to 'Product List', admin_index_path, class: 'btn btn-default navbar-btn add-product'
 .container
   .row
     .col-lg-12
@@ -11,7 +15,7 @@
                 prohibited this product from being saved:
               %ul
                 - @product.errors.full_messages.each do |error|
-                  %li= error
+                  %li.error-messages= error
           .form-group
             = f.label :product_image, 'Image url:', class: 'col-lg-4 control-label'
             .col-md-8
