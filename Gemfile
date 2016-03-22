@@ -10,6 +10,9 @@ gem 'thin'
 gem 'jquery-rails'
 gem 'haml-rails'
 
+gem 'bootstrap-sass', '~> 3.3.6'
+gem 'sass-rails', '>= 3.2'
+
 group :development, :test do
   gem 'pry-rails'
   gem 'byebug'
@@ -17,5 +20,6 @@ group :development, :test do
   gem 'better_errors'
   gem 'rspec-rails'
   gem 'database_cleaner'
+  gem 'factory_girl_rails'
 end
 
