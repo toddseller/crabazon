@@ -14,7 +14,8 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     if @product.save
-      redirect_to "/"
+      flash[:success] = "Product successfully saved!"
+      redirect_to "/admin"
     else
       render 'new'
     end
@@ -27,6 +28,12 @@ class ProductsController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def destroy
+    @product = Product.find(params[:id])
+    @product.destroy
+    redirect_to '/admin'
   end
 
   private

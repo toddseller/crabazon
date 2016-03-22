@@ -6,6 +6,9 @@
 .container
   .row
     .col-sm-12
+      - if flash[:success]
+        #flash.success
+          = flash[:success]
       %h1.text-center.index-header Your Inventory!
       %table.table.table-striped.table-border
         %thead
@@ -20,4 +23,5 @@
               %td.text-center= product.price
               %td.text-center= product.quantity
               %td.text-center= link_to 'Edit', edit_product_path(product), class: 'btn btn-primary'
+              %td.text-center= link_to 'Delete', product_path(product), :method => 'delete', class: 'btn btn-primary'
 
