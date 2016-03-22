@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     if @product.save
-      flash[:success] = "Product successfully saved!"
+      flash[:success] = "Product successfully created!"
       redirect_to "/admin"
     else
       render 'new'
@@ -24,7 +24,8 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find(params[:id])
     if @product.update(product_params)
-      redirect_to "/"
+      flash[:success] = "Product successfully updated!"
+      redirect_to "/admin"
     else
       render 'edit'
     end
