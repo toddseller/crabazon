@@ -17,6 +17,7 @@ class ProductsController < ApplicationController
       flash[:success] = "Product successfully created!"
       redirect_to "/admin"
     else
+      flash[:error] = @product.errors.full_messages.to_sentence
       render 'new'
     end
   end
@@ -34,6 +35,7 @@ class ProductsController < ApplicationController
   def destroy
     @product = Product.find(params[:id])
     @product.destroy
+    flash[:success] = "Product successfully deleted!"
     redirect_to '/admin'
   end
 

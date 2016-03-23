@@ -1,3 +1,9 @@
+.error{
+  font-size: 18px;
+  text-align: center;
+  color: #5cb85c;
+}
+
 .success{
   font-size: 18px;
   color: #5cb85c;
@@ -106,4 +112,42 @@ div.product-box:hover div.index-price {
 .index-qty {
   font-weight: bold;
   font-size: 1.25em;
+}
+
+@media (max-width: 1199px) {
+  .index-price {
+    margin-left: 162px;
+  }
+}
+
+@media (max-width: 991px) {
+  .product-box {
+    width: 325px;
+  }
+
+  .index-price {
+    margin-left: 204px;
+  }
+
+  .product-box img {
+    margin: 0 auto;
+    margin-top: -100px;
+  }
+}
+
+@media (max-width: 767px) {
+  .product-box {
+    width: 400px;
+  }
+
+  .index-price {
+    margin-left: 279px;
+  }
+
+  .product-box img {
+    width: 300px;
+    height: auto;
+    margin: 0 auto;
+    margin-top: -100px;
+  }
 }
