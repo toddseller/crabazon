@@ -5,6 +5,7 @@ class ProductsController < ApplicationController
 
   def new
     @product = Product.new
+    @categories = Category.all
   end
 
   def edit
@@ -12,12 +13,15 @@ class ProductsController < ApplicationController
   end
 
   def create
+    p '*************'
+    p params
     @product = Product.new(product_params)
+    @categories = params[:categories]
     if @product.save
       flash[:success] = "Product successfully created!"
       redirect_to "/admin"
     else
-      flash[:error] = @product.errors.full_messages.to_sentence
+      flash[:error] = "Opps! Something went wrong. Try again!"
       render 'new'
     end
   end
