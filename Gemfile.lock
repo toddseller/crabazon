@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/ifad/data-confirm-modal.git
+  revision: a2018ab8893cdeeeffaae407368ed1a20ea72b30
+  specs:
+    data-confirm-modal (1.1.0)
+      railties (>= 3.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -188,6 +195,7 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-sass (~> 3.3.6)
   byebug
+  data-confirm-modal!
   database_cleaner
   factory_girl_rails
   faker
