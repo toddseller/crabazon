@@ -34,8 +34,6 @@
           .form-group
             = f.label :categories, 'Product Categories: (hold shift to select more than one)', class: 'col-lg-4 control-label'
             .col-md-8
-              %select.form-control{multiple: true}
-                - @categories.each do |category|
-                  %option= category.name
+              = select_tag("category_ids[]", options_for_select(Category.all.collect { |category| [category.name, category.id] }, @product.categories.collect { |category| category_id }), { multiple: true })
           .col-md-12.update-button
             = f.submit 'Add Product', class: 'btn btn-primary btn-lg center-block'
