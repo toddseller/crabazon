@@ -1,6 +1,4 @@
-class UsersController < ApplicationController
-  # before_action :authenticate_user!
-
+class RegistrationsController < Devise::RegistrationsController
   def new
     @user = User.new
   end
@@ -8,14 +6,12 @@ class UsersController < ApplicationController
   def create
     p '*********************'
     p params
-    @user = User.new(params[:email])
+    @user = User.new(params[user_params])
     p '*********************'
     p @user
     respond_to do |format|
       if @user.save
-        p '****************'
-        p 'Bitches'
-        UserMailer.welcome_email(@user).deliver_now
+        UserMailer.welcome_email(@user).deliver_later
         format.html { redirect_to(@user, notice: 'User was successfully created.') }
         format.json { render json: @user, status: :created, location: @user }
       else
@@ -25,9 +21,8 @@ class UsersController < ApplicationController
     end
   end
 
-  def show
-    @user = User.find(1)
-    @products = Product.sort_by_price
-    render 'index/index'
+  private
+  def user_params
+    params.require(:user).permit(:email,)
   end
 end
