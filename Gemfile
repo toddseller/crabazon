@@ -17,6 +17,7 @@ gem 'devise'
 gem 'rails_12factor'
 
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'pry-rails'
   gem 'byebug'
   gem 'binding_of_caller'
