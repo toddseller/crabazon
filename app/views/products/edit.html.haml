@@ -34,5 +34,9 @@
             = f.label :quantity, 'Product Quantity:', class: 'col-lg-4 control-label'
             .col-md-8
               = f.text_field :quantity, class: 'form-control'
+          .form-group
+            = f.label :categories, 'Product Categories: (hold command or control to select more than one)', class: 'col-lg-4 control-label'
+            .col-md-8
+              = select_tag("category_ids[]", options_for_select(Category.all.collect { |category| [category.name, category.id] }), { multiple: true, class: 'form-control' })
           .col-md-offset-4.col-md-8.update-button
             = f.submit 'Update Product', class: 'btn btn-primary btn-lg center-block'
