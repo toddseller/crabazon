@@ -13,6 +13,8 @@
           = link_to 'Login', 'users/sign_in', class: 'btn btn-success navbar-btn add-product'
           = link_to 'Sign Up', 'users/sign_up', class: 'btn btn-success navbar-btn add-product'
         - else
+          - if current_user.role == 'admin'
+            = link_to 'Admin', admin_index_path, class: 'btn btn-default navbar-btn add-product'
           = link_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-success navbar-btn add-product'
   %body
     %p.notice= notice
