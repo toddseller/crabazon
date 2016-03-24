@@ -31,7 +31,7 @@ before_filter :configure_sign_up_params, only: [:create]
     respond_to do |format|
       if @user.save
         UserMailer.welcome_email(@user).deliver_now
-        format.html { redirect_to('/index', notice: 'User was successfully created.') }
+        format.html { redirect_to(index_path, notice: 'User was successfully created.') }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render action: 'new' }
@@ -63,7 +63,7 @@ before_filter :configure_sign_up_params, only: [:create]
 
   # The path used after sign up.
   def after_sign_up_path_for(resource)
-    admin_index_path
+    index_path
   end
 
   # The path used after sign up for inactive accounts.
