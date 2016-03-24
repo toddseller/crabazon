@@ -1,7 +1,8 @@
 .container
   .row
     .col-sm-12
-      %h1.text-center.index-header Welcome to our store!
+      %h1.text-center.index-header
+        = "Welcome to #{@category.name}!"
     .col-sm-12
       - @products.each do |product|
         .col-lg-3.col-md-4.col-sm-6-col-xs-12.pull-left.clear-fix.index-product
@@ -16,3 +17,6 @@
                 %p= product.description
               %p.index-qty
                 Qty: #{product.quantity}
+              %p
+                - product.categories.each do |category|
+                  = link_to category.name, "/categories/#{category.id}"
