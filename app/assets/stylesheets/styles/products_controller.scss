@@ -114,6 +114,19 @@ div.product-box:hover div.index-price {
   font-size: 1.25em;
 }
 
+.sign-in {
+  padding: 0 30px 30px;
+  border: 1px solid #e4e4e4;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+#sign-in-button {
+  margin: 15px 0;
+}
+
 @media (max-width: 1199px) {
   .index-price {
     margin-left: 162px;
