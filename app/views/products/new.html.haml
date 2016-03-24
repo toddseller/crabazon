@@ -32,8 +32,8 @@
             .col-md-8
               = f.text_field :quantity, class: 'form-control'
           .form-group
-            = f.label :categories, 'Product Categories: (hold shift to select more than one)', class: 'col-lg-4 control-label'
+            = f.label :categories, 'Product Categories: (hold command or control to select more than one)', class: 'col-lg-4 control-label'
             .col-md-8
-              = select_tag("category_ids[]", options_for_select(Category.all.collect { |category| [category.name, category.id] }, @product.categories.collect { |category| category_id }), { multiple: true })
+              = select_tag("category_ids[]", options_for_select(Category.all.collect { |category| [category.name, category.id] }, @product.categories.collect { |category| category_id }), { multiple: true, class: 'form-control' })
           .col-md-12.update-button
             = f.submit 'Add Product', class: 'btn btn-primary btn-lg center-block'
