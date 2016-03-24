@@ -1,12 +1,13 @@
 %nav.navbar.navbar-default.navbar-fixed-top
   .container-fluid
     .nav.navbar-nav.navbar-right
-      = link_to 'Product List', admin_index_path, class: 'btn btn-default navbar-btn add-product'
+      = link_to 'Product List', admin_index_path, class: 'btn btn-default navbar-btn btn-one'
 .container
   .row
     .col-lg-12
       = form_for @product, html: { class: 'form-horizontal center', id: 'edit-form' } do |f|
-        %h1.text-center.edit-header Add New Product
+        %h1.text-center.edit-header
+          Add New Product
         .form-center
           - if flash[:error]
             #flash.error.text-center
@@ -31,5 +32,9 @@
             = f.label :quantity, 'Product Quantity:', class: 'col-lg-4 control-label'
             .col-md-8
               = f.text_field :quantity, class: 'form-control'
+          .form-group
+            = f.label :categories, 'Product Categories: (hold command or control to select more than one)', class: 'col-lg-4 control-label'
+            .col-md-8
+              = select_tag("category_ids[]", options_for_select(Category.all.collect { |category| [category.name, category.id] }, @product.categories.collect { |category| category_id }), { multiple: true, class: 'form-control' })
           .col-md-12.update-button
             = f.submit 'Add Product', class: 'btn btn-primary btn-lg center-block'

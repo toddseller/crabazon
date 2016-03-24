@@ -1,25 +1,25 @@
-require 'rails_helper'
+# require 'rails_helper'
 
-RSpec.describe ProductsController, type: :controller do
+# RSpec.describe CategoriesController, type: :controller do
 
-  describe 'GET #new' do 
-    # it 'assigns a new category to @category' do 
-    #   get :new
-    #   expect(assigns(:category)).to be_a_new(Category)
-    # end
+#   describe 'GET #new' do 
+#     it 'assigns a new category to @category' do 
+#       get :new
+#       expect(assigns(:category)).to be_a_new(Category)
+#     end
 
-    it 'renders the :new template' do 
-      get :new
-      expect(response).to render_template :new
-    end
-  end
+#     it 'renders the :new template' do 
+#       get :new
+#       expect(response).to render_template :new
+#     end
+#   end
 
-  describe 'POST #create' do 
-    let(:category) {Category.create(name: 'test')}
-    it 'assigns the requested category to @category' do 
-      get :edit, id: category.id
-      expect(assigns(:category)).to eq category
-    end
+  # describe 'POST #create' do 
+  #   let(:category) {Category.create(name: 'test')}
+  #   it 'assigns the requested category to @category' do 
+  #     get :edit, id: category.id
+  #     expect(assigns(:category)).to eq category
+  #   end
 
 
   #   it 'renders adds a new product to the list of products' do 
@@ -44,7 +44,7 @@ RSpec.describe ProductsController, type: :controller do
   #           expect(response).to render_template :new
   #         end
   #       end
-     end
+     # end
 
   # describe 'GET #edit' do 
   #   let(:product) {Product.create!(name: Faker::Beer.name, description: Faker::Hipster.sentence, price: Faker::Commerce.price, quantity: Faker::Number.between(1,20), product_image: Faker::Avatar.image, reseller_id: 1 ) }
@@ -113,4 +113,4 @@ RSpec.describe ProductsController, type: :controller do
   # end
 
 
-end
+# end

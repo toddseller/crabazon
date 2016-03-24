@@ -16,11 +16,11 @@ RSpec.describe ProductsController, type: :controller do
   end
   describe 'POST #create' do 
     let(:product) {Product.create!(name: Faker::Beer.name, description: Faker::Hipster.sentence, price: Faker::Commerce.price, quantity: Faker::Number.between(1,20), product_image: Faker::Avatar.image, reseller_id: 1 ) }
-    
-    it 'assigns the requested product to @product' do 
-      get :edit, id: product.id
-      expect(assigns(:product)).to eq product
-    end
+    let(:categories){[1,2]}
+    # it 'assigns the requested product to @product' do 
+    #   get :edit, id: product.id
+    #   expect(assigns(:product)).to eq product
+    # end
 
     it 'renders adds a new product to the list of products' do 
       get :edit, id: product.id
