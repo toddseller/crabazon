@@ -1,0 +1,18 @@
+.container
+  .row
+    .col-sm-12
+      %h1.text-center.index-header Welcome to our store!
+    .col-sm-12
+      - @products.each do |product|
+        .col-lg-3.col-md-4.col-sm-6-col-xs-12.pull-left.clear-fix.index-product
+          .product-box
+            .index-price
+              %h2.text-right
+                %sup.index-dollar $
+                = product.price
+            %img.index-image{:alt => "#{product.name} Image", :src => product.product_image}
+              %h4= product.name
+              .index-description
+                %p= product.description
+              %p.index-qty
+                Qty: #{product.quantity}
