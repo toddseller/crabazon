@@ -6,6 +6,14 @@
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
     = csrf_meta_tags
+  %nav.navbar.navbar-default.navbar-fixed-top
+    .container-fluid
+      .nav.navbar-nav.navbar-right
+        - if !user_signed_in?
+          = link_to 'Login', 'users/sign_in', class: 'btn btn-success navbar-btn add-product'
+          = link_to 'Sign Up', 'users/sign_up', class: 'btn btn-success navbar-btn add-product'
+        - else
+          = link_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-success navbar-btn add-product'
   %body
     %p.notice= notice
     %p.alert= alert
