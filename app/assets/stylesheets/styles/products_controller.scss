@@ -21,7 +21,7 @@ body {
 }
 
 .edit-header {
-  margin-top: 100px;
+  margin-top: 50px;
   margin-bottom: 50px;
 }
 
@@ -41,8 +41,12 @@ body {
   height: 80px;
 }
 
-.add-product {
+.btn-one {
   margin-right: 45px;
+}
+
+.btn-two {
+  margin-right: 15px;
 }
 
 .index-header {
@@ -53,6 +57,7 @@ body {
   padding: 10px 20px 20px;
   border: 1px solid #e4e4e4;
   border-radius: 5px;
+  height: 485px;
 }
 
 div.product-box:hover div.index-price {
@@ -112,6 +117,23 @@ div.product-box:hover div.index-price {
 .index-qty {
   font-weight: bold;
   font-size: 1.25em;
+}
+
+.index-categories {
+
+}
+
+.sign-in {
+  padding: 0 30px 30px;
+  border: 1px solid #e4e4e4;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+#sign-in-button {
+  margin: 15px 0;
 }
 
 @media (max-width: 1199px) {

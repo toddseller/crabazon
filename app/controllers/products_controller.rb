@@ -5,6 +5,7 @@ class ProductsController < ApplicationController
 
   def new
     @product = Product.new
+    @categories = Category.all
   end
 
   def edit
@@ -13,11 +14,16 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
+    @categories_id = params[:category_ids]
     if @product.save
+      @categories_id.each do |category_id|
+        category = Category.find(category_id)
+        @product.categories << category
+      end
       flash[:success] = "Product successfully created!"
       redirect_to "/admin"
     else
-      flash[:error] = @product.errors.full_messages.to_sentence
+      flash[:error] = "Opps! Something went wrong. Try again!"
       render 'new'
     end
   end
@@ -41,7 +47,7 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    params.require(:product).permit(:name, :description, :price, :quantity, :product_image)
+    params.require(:product).permit(:name, :description, :price, :quantity, :product_image, { categories: [] })
   end
 
 end
