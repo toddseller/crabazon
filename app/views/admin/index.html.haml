@@ -15,12 +15,14 @@
       %table.table.table-striped.table-border
         %thead
           %tr
+            %th
             %th Product Name
             %th.text-center Price
             %th.text-center Quantity
         %tbody
           - @products.each do |product|
             %tr
+              %td.admin-image= link_to image_tag(product.product_image), product_path(product)
               %td= product.name
               %td.text-center= product.price
               %td.text-center= product.quantity

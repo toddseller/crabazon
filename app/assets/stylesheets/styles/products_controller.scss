@@ -16,6 +16,16 @@ body {
   padding-top: 70px;
 }
 
+.table > tbody > tr > td {
+  height: 60px;
+  vertical-align: middle;
+}
+
+td.admin-image img {
+  width: 50px;
+  height: auto;
+}
+
 .description-center {
   margin-top: 60px;
 }
