@@ -27,7 +27,7 @@ before_filter :configure_sign_up_params, only: [:create]
   #   super
   # end
   def create
-    @user = User.new(params[:user].permit(:email, :password))
+    @user = User.new(params[:user].permit(:name, :email, :password))
     respond_to do |format|
       if @user.save
         UserMailer.welcome_email(@user).deliver_now
