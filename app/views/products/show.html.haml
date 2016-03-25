@@ -4,6 +4,7 @@
       .col-lg-7
         %h1.product-page-header.text-center= @product.name
         %p.product-page-desc.text-center= @product.description
+        %button.btn.btn-primary.btn-lg.center-block.add-product-button{:id => "add_#{@product.id}"} Add Product
       .col-lg-4
         %h1.product-page-price.text-right
           %sup.product-dollar $ 
