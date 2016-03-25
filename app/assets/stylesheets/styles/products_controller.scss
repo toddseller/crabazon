@@ -26,8 +26,26 @@ body {
   border-color: #f19833;
 }
 
-.btn-primary:hover, .btn-primary:active,
-.btn-primary:focus, .btn-primary:active:focus {
+.btn-primary:hover,
+.btn-primary:active:hover,
+.btn-primary.active:hover {
+  background-color: #f19833;
+  border-color: #e58c33;
+}
+
+.btn-primary:active,
+.btn-primary.active {
+  background-color: #f19833;
+  border-color: #e58c33;
+}
+.btn-primary:focus,
+.btn-primary.focus {
+  background-color: #f19833;
+  border-color: #e58c33;
+}
+
+.btn-primary:active:focus,
+.btn-primary.active:focus {
   background-color: #f19833;
   border-color: #e58c33;
 }
