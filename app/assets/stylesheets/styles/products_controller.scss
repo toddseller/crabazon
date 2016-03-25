@@ -233,6 +233,29 @@ td.clickable-row:hover {
   vertical-align: middle;
 }
 
+.dropdown ul ul {
+  list-style: none;
+}
+
+.dropdown ul ul {
+  width: 472px;
+}
+
+button#dropdownCategories.btn.btn-default.dropdown-toggle {
+  width: 100%;
+  text-align: right;
+}
+
+div.mutliSelect {
+  width: 100%;
+}
+
+.multiSel span {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 3px 2px 0;
+}
+
 @media (max-width: 1199px) {
   .index-price {
     margin-left: 162px;

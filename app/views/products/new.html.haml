@@ -34,8 +34,17 @@
             .col-md-8
               = f.text_field :quantity, class: 'form-control'
           .form-group
-            = f.label :categories, 'Product Categories: (hold command or control to select more than one)', class: 'col-lg-4 control-label'
+            = f.label :categories, 'Product Categories:', class: 'col-lg-4 control-label'
             .col-md-8
-              = select_tag("category_ids[]", options_for_select(Category.all.collect { |category| [category.name, category.id] }, @product.categories.collect { |category| category_id }), { multiple: true, class: 'form-control' })
+              .dropdown
+                %button#dropdownCategories.btn.btn-default.dropdown-toggle{ 'aria-expanded' => true, 'aria-haspopup' => true, 'data-toggle' => 'dropdown', type: 'button' }
+                  %span.hida.caret
+                  %p.multiSel
+                %ul.dropdown-menu{'aria-labelledby' => 'dropdownCategories'}
+                  %ul.multiSelect{multiple: 'multiple'}
+                    - @categories.each do |category|
+                      %li
+                        %input{type: 'checkbox', value: category.id, name: 'category_ids[]'}
+                        = category.name
           .col-md-12.update-button
             = f.submit 'Add Product', class: 'btn btn-primary btn-lg center-block'
