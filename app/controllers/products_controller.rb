@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
 
   def new
     @product = Product.new
-    @categories = Category.all
+    @categories = Category.sort_by_name
   end
 
   def create
@@ -31,10 +31,14 @@ class ProductsController < ApplicationController
 
   def edit
     @product = Product.find(params[:id])
+    @categories = Category.sort_by_name
+    @product.categories.pluck(:id)
   end
 
   def update
     @product = Product.find(params[:id])
+    @categories_id = params[:category_ids]
+    params[:product][:category_ids] = params[:category_ids]
     if @product.update(product_params)
       flash[:success] = "Product successfully updated!"
       redirect_to "/admin"
@@ -52,7 +56,7 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    params.require(:product).permit(:name, :description, :price, :quantity, :product_image, { categories: [] })
+    params.require(:product).permit(:name, :description, :price, :quantity, :product_image, { category_ids: [] })
   end
 
 end
