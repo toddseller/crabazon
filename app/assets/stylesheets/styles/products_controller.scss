@@ -212,6 +212,27 @@ td.clickable-row:hover {
   cursor: pointer;
 }
 
+.product-dollar {
+  top: -20px;
+  margin-right: -5px;
+  font-size: 28px;
+}
+
+.header-cart .badge {
+  position: absolute;
+  right: 425px;
+  background-color: #e58c33;
+}
+
+.header-cart img {
+  position: absolute;
+  top: 10px;
+  right: 450px;
+  width: 2%;
+  heigth: auto;
+  vertical-align: middle;
+}
+
 @media (max-width: 1199px) {
   .index-price {
     margin-left: 162px;

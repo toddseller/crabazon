@@ -16,6 +16,10 @@
           %span.icon-bar
         = link_to image_tag('amacrabz.svg'), index_path, class: 'navbar-brand'
       - if user_signed_in?
+        .navbar-brand.header-cart
+          = link_to index_path do
+            %span.badge 1
+            %img{src: '/assets/cart.svg'}
         %p.navbar-text.navbar-right.signed-in= "Signed in as #{current_user.name}"
       .collapse.navbar-collapse#main-nav
         %ul.nav.navbar-nav
