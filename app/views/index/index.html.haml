@@ -1,8 +1,8 @@
 .container
   .row
     .col-sm-12
-      %img.macrabz.center-block{:alt => 'Macrabz Emporium', :src => '/assets/macrabz-a967c06d5b83d873932edc0ea8d3ec80ca9e2df932703f7bd2d28cd50712af6a.svg'}
-      %h1.text-center.index-header On-line Emporium!
+      %img.macrabz.center-block{:alt => 'Macrabz Emporium', :src => '/assets/amacrabz.svg'}
+      %h1.text-center.index-header Online Emporium!
     .col-sm-12
       - @products.each do |product|
         .col-lg-3.col-md-4.col-sm-6-col-xs-12.pull-left.clear-fix.index-product
@@ -10,7 +10,7 @@
             .index-price
               %h2.text-right
                 %sup.index-dollar $
-                = product.price
+                = product.price.truncate
             %img.index-image{:alt => "#{product.name} Image", :src => product.product_image}
               %h4= product.name
               .index-description
