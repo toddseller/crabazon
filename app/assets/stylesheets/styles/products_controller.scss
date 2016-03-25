@@ -16,6 +16,21 @@ body {
   padding-top: 70px;
 }
 
+.navbar-default {
+  border: none;
+  background-color: rgba(255, 255, 255, .98)
+}
+
+.table > tbody > tr > td {
+  height: 60px;
+  vertical-align: middle;
+}
+
+td.admin-image img {
+  width: 50px;
+  height: auto;
+}
+
 .description-center {
   margin-top: 60px;
 }
@@ -66,18 +81,17 @@ div.product-box:hover div.index-price {
   margin-top: -41px;
 }
 
-.product-box img {
-  margin-top: -100px;
-}
-
 .product-box h4 {
   height: 40px;
 }
 
 .product-box img {
-  margin-left: -17px;
-  width: 250px;
-  height: auto;
+  margin-top: -100px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  margin-left: -21px;
+  width: 255px;
+  height: 250px;
 }
 
 .index-edit {
@@ -85,6 +99,8 @@ div.product-box:hover div.index-price {
 }
 
 .index-price {
+  position: relative;
+  z-index: 1;
   width: 100px;
   height: 100px;
   margin-top: -31px;
@@ -136,9 +152,54 @@ div.product-box:hover div.index-price {
   margin: 15px 0;
 }
 
+.product-page-header {
+  margin-top: 75px;
+}
+
+.product-page-desc {
+  margin-top: 50px;
+  font-size: 1.25em;
+}
+
+.product-page-price {
+  font-size: 4em;
+}
+
+.product-page-image img {
+  width: 400px;
+  height: auto;
+}
+
+.navbar-brand img {
+  width: 85px;
+  height: auto;
+}
+
+.signed-in {
+  position: absolute;
+  right: 250px;
+}
+
+.macrabz {
+  width: 50%;
+}
+
+.macrabz-admin {
+  width: 30%;
+}
+
+.admin-buttons {
+  margin-top: -50px;
+  margin-right: 30px;
+}
+
 @media (max-width: 1199px) {
   .index-price {
     margin-left: 162px;
+  }
+
+  .product-box img {
+    width: 283px;
   }
 }
 
@@ -152,12 +213,18 @@ div.product-box:hover div.index-price {
   }
 
   .product-box img {
-    margin: 0 auto;
-    margin-top: -100px;
+    width: 325px;
   }
 }
 
+
 @media (max-width: 767px) {
+  .signed-in {
+    position: absolute;
+    top: 0;
+    right: 100px;
+  }
+
   .product-box {
     width: 400px;
   }
@@ -167,9 +234,9 @@ div.product-box:hover div.index-price {
   }
 
   .product-box img {
-    width: 300px;
-    height: auto;
-    margin: 0 auto;
+    width: 400px;
+    height: 250px;
+    margin-left: -20px;
     margin-top: -100px;
   }
 }

@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Product, type: :model do
+
 	context "with two or more products" do 
 		it 'orders product by created_at date' do 
 			product = Product.create(name: Faker::Beer.name, description: Faker::Hipster.sentence, price: Faker::Commerce.price, quantity: Faker::Number.between(1,20), product_image: Faker::Avatar.image)
@@ -32,4 +33,5 @@ RSpec.describe Product, type: :model do
 			expect(product.errors.full_messages).to include("Quantity can't be blank")
 		end
 	end
+
 end
