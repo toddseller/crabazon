@@ -1,13 +1,13 @@
-%nav.navbar.navbar-default.navbar-fixed-top
-  .container-fluid
-    .nav.navbar-nav.navbar-right
-      = link_to 'Product View', index_path, class: 'btn btn-default navbar-btn btn-two'
-      = link_to new_product_path, class: 'btn btn-success navbar-btn btn-one' do
+.container-fluid
+  .row
+    .col-sm-12
+      = link_to new_product_path, class: 'btn btn-success admin-buttons pull-right' do
         %i.glyphicon.glyphicon-plus
-        %span New
+        %span Add Product
 .container
   .row
     .col-sm-12
+      = link_to image_tag('/assets/macrabz-a967c06d5b83d873932edc0ea8d3ec80ca9e2df932703f7bd2d28cd50712af6a.svg'), index_path, class: 'macrabz-admin center-block'
       %h1.text-center.index-header Your Inventory!
       - if flash[:success]
         #flash.success.text-center
@@ -22,8 +22,8 @@
         %tbody
           - @products.each do |product|
             %tr
-              %td.admin-image= link_to image_tag(product.product_image), product_path(product)
-              %td= product.name
+              %td.clickable-row.admin-image{'data-url' => "/products/#{product.id}"}= image_tag(product.product_image)
+              %td.clickable-row{'data-url' => "/products/#{product.id}"}= product.name
               %td.text-center= product.price
               %td.text-center= product.quantity
               %td.text-right= link_to 'Edit', edit_product_path(product), class: 'btn btn-primary'
