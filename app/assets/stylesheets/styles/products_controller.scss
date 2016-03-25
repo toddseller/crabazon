@@ -26,7 +26,8 @@ body {
   border-color: #f19833;
 }
 
-.btn-primary:hover {
+.btn-primary:hover, .btn-primary:active,
+.btn-primary:focus, .btn-primary:active:focus {
   background-color: #f19833;
   border-color: #e58c33;
 }
@@ -205,6 +206,10 @@ div.product-box:hover div.index-price {
 .admin-buttons {
   margin-top: -50px;
   margin-right: 30px;
+}
+
+td.clickable-row:hover {
+  cursor: pointer;
 }
 
 @media (max-width: 1199px) {
