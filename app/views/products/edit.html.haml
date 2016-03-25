@@ -6,7 +6,7 @@
   .row
     .col-lg-12
       = form_for @product, html: { class: 'form-horizontal center', id: 'edit-form' } do |f|
-        %img.macrabz-admin.center-block{:alt => 'Macrabz Emporium', :src => '/assets/amacrabz.svg'}
+        %img.macrabz-admin.center-block{:alt => 'Macrabz Emporium', :src => '/assets/amacrabz-f090c51c8aa06149fcc20cb1c563d771075b1e63998352663694b5c9bd55ffb4.svg'}
         %h1.text-center.edit-header
           Edit #{@product.name}
         .col-lg-4
@@ -38,6 +38,19 @@
           .form-group
             = f.label :categories, 'Product Categories: (hold command or control to select more than one)', class: 'col-lg-4 control-label'
             .col-md-8
-              = select_tag("category_ids[]", options_for_select(Category.all.collect { |category| [category.name, category.id] }), { multiple: true, class: 'form-control' })
+              .dropdown
+                %button#dropdownCategories.btn.btn-default.dropdown-toggle{ 'aria-expanded' => true, 'aria-haspopup' => true, 'data-toggle' => 'dropdown', type: 'button' }
+                  %span.hida.caret
+                  %p.multiSel
+                %ul.dropdown-menu{'aria-labelledby' => 'dropdownCategories'}
+                  %ul.multiSelect{multiple: 'multiple'}
+                    - @categories.each do |category|
+                      %li
+                        - if @product.categories.pluck(:id).include?(category.id)
+                          %input{type: 'checkbox', value: category.id, name: 'category_ids[]', checked: 'checked'}
+                          = category.name
+                        - else
+                          %input{type: 'checkbox', value: category.id, name: 'category_ids[]'}
+                          =category.name
           .col-md-offset-4.col-md-8.update-button
             = f.submit 'Update Product', class: 'btn btn-primary btn-lg center-block'
