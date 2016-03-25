@@ -1,11 +1,12 @@
 .container
   .row
     .col-sm-12
-      %h1.text-center.index-header Welcome to our store!
+      %img.macrabz.center-block{:alt => 'Macrabz Emporium', :src => '/assets/macrabz-a967c06d5b83d873932edc0ea8d3ec80ca9e2df932703f7bd2d28cd50712af6a.svg'}
+      %h1.text-center.index-header On-line Emporium!
     .col-sm-12
       - @products.each do |product|
         .col-lg-3.col-md-4.col-sm-6-col-xs-12.pull-left.clear-fix.index-product
-          .product-box
+          .product-box.clickable-row{'data-url' => "/products/#{product.id}"}
             .index-price
               %h2.text-right
                 %sup.index-dollar $
