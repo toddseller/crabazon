@@ -16,7 +16,7 @@
 * Client can edit items. 
   
 ### Live Heroku Site Link
-[Macrabz](https://evening-ridge-61678.herokuapp.com)
+[Amacrabz](https://amacrabz.herokuapp.com)
 
 ### Schema Design for Online Shop
 ![Alt text](online-shop-schema.png)
