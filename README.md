@@ -1,7 +1,7 @@
 ## Ye Olde Online Shoppe
 
 ### User Stories
- *User can see all items available for sale.  
+* User can see all items available for sale.  
   • User can purchase any item available for sale.  
   • User can see purchase history.  
   • User can add items to a shopping cart.  
