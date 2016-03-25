@@ -15,10 +15,9 @@
               %h4= product.name
               .index-description
                 %p= product.description
-              %p.index-qty
-                Qty: #{product.quantity}
               %p.index-categories
                 - product.categories.each do |category|
                   = link_to category.name, "/categories/#{category.id}"
+              %button.btn.btn-primary.btn-lg.center-block.add-product-button{:id => "add_#{product.id}"} Add Product
 
 

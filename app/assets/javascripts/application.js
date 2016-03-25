@@ -15,3 +15,4 @@
 //= require bootstrap
 //= require data-confirm-modal
 //= require admin
+//= require shopping_cart
