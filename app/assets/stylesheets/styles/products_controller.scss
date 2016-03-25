@@ -246,7 +246,7 @@ td.clickable-row:hover {
   position: absolute;
   top: 10px;
   right: 460px;
-  width: 2%;
+  width: 29px;
   heigth: auto;
   vertical-align: middle;
 }
@@ -319,5 +319,22 @@ div.mutliSelect {
     height: 250px;
     margin-left: -20px;
     margin-top: -100px;
+  }
+
+  .header-cart .badge {
+    position: absolute;
+    vertical-align: middle;
+    top: 15px;
+    right: 275px;
+    background-color: #e58c33;
+}
+
+  .header-cart img {
+    position: absolute;
+    top: 10px;
+    right: 310px;
+    width: 29px;
+    heigth: auto;
+    vertical-align: middle;
   }
 }
