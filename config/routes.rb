@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :products
   resources :admin
   resources :categories
+  resources :orders
   
   post 'carts/:product_id', to: 'carts#add', as: :add_to
   	# put 'remove/:product_id', to: 'carts#remove', as: :remove_from
