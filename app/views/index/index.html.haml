@@ -15,9 +15,40 @@
               %h4= product.name
               .index-description
                 %p= product.description
-              %p.index-categories
-                - product.categories.sort_by_name.each do |category|
-                  = link_to category.name, "/categories/#{category.id}"
-              %button.btn.btn-primary.btn-lg.center-block.add-product-button{:id => "add_#{product.id}"} Add Product
+            .product-button
+              %button.btn.btn-primary-2.btn-lg.center-block.add-product-button{:id => "add_#{product.id}", 'data-toggle' => 'modal', 'data-target' => '#cart'} Add to Cart
+#cart.modal.fade{:role => "dialog", :tabindex => "-1"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+          %span{"aria-hidden" => "true"} &times;
+        %h2.modal-title.text-center
+          Your 
+          %img.modal-header-image{:alt => 'Macrabz Emporium', :src => '/assets/amacrabz-f090c51c8aa06149fcc20cb1c563d771075b1e63998352663694b5c9bd55ffb4.svg'}
+          Cart
+      .modal-body
+        %table.table
+          %thead
+            %tr
+              %th
+              %th Product Name
+              %th.text-center Price
+              %th.text-center Quantity
+              %th
+              %th.text-center Total
+          %tbody
+            - @products.each do |product|
+              %tr
+                %td.admin-image{'data-url' => "/products/#{product.id}"}= image_tag(product.product_image)
+                %td{'data-url' => "/products/#{product.id}"}= product.name
+                %td.text-center= number_with_precision(product.price, precision: 2)
+                %td.text-center= product.quantity
+                %td.text-left
+                  = link_to product_path(product), confirm: 'Are you sure you want to delete this product? This action can not be undone.', method: :delete do
+                    %i.glyphicon.glyphicon-trash
+      .modal-footer
+        %button.btn.btn-default{'aria-label' => 'Close', 'data-dismiss' => 'modal', type: 'button'} Continue Shopping
+        %button#sign-in-submit.btn.btn-primary{:type => "submit"} Checkout Now
 
 

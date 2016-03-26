@@ -7,6 +7,8 @@ $(document).ready(function() {
     var $clicked = $(event.target);
   });
 
+  $('.add-product-button').on('click', addProduct)
+
   $('.multiSelect input[type="checkbox"]').on('click', function() {
     var title = $(this).closest('.multiSelect,li').text()+',';
 

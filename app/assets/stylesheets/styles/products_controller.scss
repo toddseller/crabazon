@@ -21,31 +21,48 @@ body {
   background-color: rgba(255, 255, 255, .98)
 }
 
-.btn-primary {
+.product-button {
+  margin: 29px -20px 0;
+}
+
+.btn-primary-2 {
+  color: #ffffff;
+  border-radius: 0 0 5px 5px !important;
+  width: 100%;
+}
+
+.btn-primary, .btn-primary-2 {
   background-color: #e58c33;
   border-color: #f19833;
 }
 
 .btn-primary:hover,
 .btn-primary:active:hover,
-.btn-primary.active:hover {
+.btn-primary.active:hover,
+.btn-primary-2:hover,
+.btn-primary-2:active:hover,
+.btn-primary-2.active:hover {
+  color: #ffffff;
   background-color: #f19833;
   border-color: #e58c33;
 }
 
 .btn-primary:active,
 .btn-primary.active {
+  color: #ffffff;
   background-color: #f19833;
   border-color: #e58c33;
 }
 .btn-primary:focus,
 .btn-primary.focus {
+  color: #ffffff;
   background-color: #f19833;
   border-color: #e58c33;
 }
 
 .btn-primary:active:focus,
 .btn-primary.active:focus {
+  color: #ffffff;
   background-color: #f19833;
   border-color: #e58c33;
 }
@@ -101,7 +118,7 @@ td.admin-image img {
   padding: 10px 20px 20px;
   border: 1px solid #e4e4e4;
   border-radius: 5px;
-  height: 485px;
+  height: 465px;
 }
 
 div.product-box:hover {
@@ -274,6 +291,16 @@ div.mutliSelect {
   padding: 0 3px 2px 0;
 }
 
+.product-button button {
+  border-radius-top-left: 0 !important;
+  border-radius-top-right: 0 !important;
+}
+
+.modal-header-image {
+  width: 150px;
+  margin: 17px 5px 10px;
+}
+
 @media (max-width: 1199px) {
   .index-price {
     margin-left: 162px;
@@ -315,7 +342,7 @@ div.mutliSelect {
   }
 
   .product-box img {
-    width: 400px;
+    width: 250px;
     height: 250px;
     margin-left: -20px;
     margin-top: -100px;
@@ -327,7 +354,7 @@ div.mutliSelect {
     top: 15px;
     right: 275px;
     background-color: #e58c33;
-}
+  }
 
   .header-cart img {
     position: absolute;
@@ -336,5 +363,9 @@ div.mutliSelect {
     width: 29px;
     heigth: auto;
     vertical-align: middle;
+  }
+
+  .navbar {
+    height: 50px;
   }
 }
