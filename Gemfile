@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails'
 gem 'pg'
 gem 'faker'
+gem 'json'
 
 gem 'uglifier'
 gem 'thin'
