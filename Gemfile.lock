@@ -226,6 +226,7 @@ DEPENDENCIES
   faker
   haml-rails
   jquery-rails
+  json
   pg
   pry-rails
   rails

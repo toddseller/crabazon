@@ -18,7 +18,7 @@
       - if user_signed_in?
         .navbar-brand.header-cart
           = link_to index_path do
-            %span.badge 1
+            %span.badge= @cart_total
             %img{src: '/assets/cart-5504f46843ad482016e59a4616ea9654ed1cf62da97bbab57bfac4ae1aa9f660.svg'}
         %p.navbar-text.navbar-right.signed-in= "Signed in as #{current_user.name}"
       .collapse.navbar-collapse#main-nav
@@ -44,3 +44,26 @@
     %p.notice= notice
     %p.alert= alert
     = yield
+    #cart.modal.fade{:role => "dialog", :tabindex => "-1"}
+      .modal-dialog
+        .modal-content
+          .modal-header
+            %button.close{"aria-label" => "Close", "data-dismiss" => "modal", :type => "button"}
+              %span{"aria-hidden" => "true"} &times;
+            %h2.modal-title.text-center
+              Your 
+              %img.modal-header-image{:alt => 'Macrabz Emporium', :src => '/assets/amacrabz-f090c51c8aa06149fcc20cb1c563d771075b1e63998352663694b5c9bd55ffb4.svg'}
+              Cart
+          .modal-body
+            %table.table
+              %thead
+                %tr
+                  %th
+                  %th Product Name
+                  %th.text-center Price
+                  %th.text-center Quantity
+                  %th.text-center Total
+              %tbody
+          .modal-footer
+            %button.btn.btn-default{'aria-label' => 'Close', 'data-dismiss' => 'modal', type: 'button'} Continue Shopping
+            %button#sign-in-submit.btn.btn-primary{:type => "submit"} Checkout Now
