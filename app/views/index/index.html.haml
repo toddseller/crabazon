@@ -16,7 +16,10 @@
               .index-description
                 %p= product.description
             .product-button
-              %button.btn.btn-primary-2.btn-lg.center-block.add-product-button{:id => "add_#{product.id}", 'data-toggle' => 'modal', 'data-target' => '#cart'} Add to Cart
+              - if user_signed_in?
+                %button.btn.btn-primary-2.btn-lg.center-block.add-product-button{:id => "add_#{product.id}", 'data-toggle' => 'modal', 'data-target' => '#cart'} Add to Cart
+              - else
+                = link_to 'Add to Cart', new_user_session_path, class:'btn btn-primary-2 btn-lg center-block' 
 
 
 
