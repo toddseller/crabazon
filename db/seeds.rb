@@ -9,4 +9,4 @@ User.create(name: 'tom', email: 'tom@tom.com', password: 'tomtom', role: 'user')
 User.create(name: 'tim', email: 'tim@tim.com', password: 'timtim', role: 'admin')
 
 5.times {Category.create!(name: Faker::Commerce.department)}
-15.times {Category.all.shuffle.first.products.create!(name: Faker::Beer.name, description: Faker::Hipster.sentence, price: Faker::Commerce.price, quantity: Faker::Number.between(1,20), product_image: Faker::Avatar.image, reseller_id: 1 )}
+15.times {Category.all.shuffle.first.products.create!(name: Faker::Beer.name, description: Faker::Hipster.sentence, price: Faker::Commerce.price, quantity: Faker::Number.between(1,20), product_image: Faker::Avatar.image)}

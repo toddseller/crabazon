@@ -6,11 +6,13 @@ var add_product = function(event){
 	event.preventDefault()
 	event.stopPropagation();
 	console.log('hello')
-	var url = 
+	var button_id = $(this).attr('id')
+	var id = button_id.slice(4)
 
-    $.ajax{url: url, 
-    	   type: 'put', 
-    	   success: (data)}
+    $.ajax({url: "/carts/" + id , 
+    	   type: 'POST',
+    	   dataType: 'json'
+    	   })
 
       // $('.cart-count').html(data)
       // $this.find('span').html(new_target)
