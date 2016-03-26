@@ -6,4 +6,18 @@ var add_product = function(event){
 	event.preventDefault()
 	event.stopPropagation();
 	console.log('hello')
+	var url = 
+
+    $.ajax{url: url, 
+    	   type: 'put', 
+    	   success: (data)}
+
+      // $('.cart-count').html(data)
+      // $this.find('span').html(new_target)
+      // $this.data('target', new_target)
+
+
+
+
+ 
 }
