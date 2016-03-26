@@ -24,9 +24,3 @@ $(document).ready(function() {
     }
   });
 });
-
-var addProduct = function(event){
-  event.preventDefault()
-  event.stopPropagation();
-  $('#cart').modal('show');
-}
