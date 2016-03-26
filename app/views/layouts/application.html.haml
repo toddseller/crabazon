@@ -2,7 +2,7 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title Shoppe
+    %title amacrabz
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
     = csrf_meta_tags
@@ -17,7 +17,7 @@
         = link_to image_tag('amacrabz.svg'), index_path, class: 'navbar-brand'
       - if user_signed_in?
         .navbar-brand.header-cart
-          = link_to index_path do
+          = link_to orders_path do
             %span.badge= @cart_total
             %img{src: '/assets/cart-5504f46843ad482016e59a4616ea9654ed1cf62da97bbab57bfac4ae1aa9f660.svg'}
         %p.navbar-text.navbar-right.signed-in= "Signed in as #{current_user.name}"

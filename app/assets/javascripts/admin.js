@@ -46,8 +46,9 @@ var addProduct = function(event){
 
 var updateCart = function(response) {
   $('#cart tbody').empty();
-  $.each(response, insertProduct)
-  $('.badge').empty().append(response.length);
+  $.each(response.cart, insertProduct)
+  insertTotal(response.cart_total)
+  $('.badge').empty().append(response.cart.length);
   $('#cart').modal('show');
 }
 
@@ -70,11 +71,28 @@ var buildRow = function(product) {
   $row.append(buildTd(product.quantity, 'text-center'));
 
   var total = (product.quantity * price).toFixed(2);
-  $row.append(buildTd(total, 'text-center').prepend('$'));
+  $row.append(buildTd(total, 'text-right').prepend('$'));
 
   return $row;
 }
 
 var buildTd = function(value, tdClass) {
   return $('<td class="' + tdClass + '"></td>').append(value);
+}
+
+var insertTotal = function(total) {
+  var formattedTotal = parseFloat(total).toFixed(2)
+  $row = buildTotalRow(formattedTotal);
+  $('#cart tbody').append($row);
+}
+
+var buildTotalRow = function(total) {
+    var total = total;
+    var $row = $('<tr></tr>');
+    $row.append(buildTd());
+    $row.append(buildTd());
+    $row.append(buildTd());
+    $row.append(buildTd());
+    $row.append(buildTd(total, 'text-right').prepend('$'));
+    return $row;
 }
