@@ -2,7 +2,7 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title amacrabz
+    %title crabazon
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
     = csrf_meta_tags
@@ -14,7 +14,7 @@
           %span.icon-bar
           %span.icon-bar
           %span.icon-bar
-        = link_to image_tag('amacrabz.svg'), index_path, class: 'navbar-brand'
+        = link_to image_tag('crabazon.svg'), index_path, class: 'navbar-brand'
       - if user_signed_in?
         .navbar-brand.header-cart
           = link_to orders_path do
@@ -52,7 +52,7 @@
               %span{"aria-hidden" => "true"} &times;
             %h2.modal-title.text-center
               Your 
-              %img.modal-header-image{:alt => 'Macrabz Emporium', :src => '/assets/amacrabz-f090c51c8aa06149fcc20cb1c563d771075b1e63998352663694b5c9bd55ffb4.svg'}
+              %img.modal-header-image{:alt => 'Macrabz Emporium', :src => '/assets/crabazon-0878a8cb72a818552016a1394ebf2537d6330ebb363c7e246c67ecf0cfd2eb6f.svg'}
               Cart
           .modal-body
             %table.table
