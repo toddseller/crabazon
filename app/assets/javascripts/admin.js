@@ -7,17 +7,7 @@ $(document).ready(function() {
     var $clicked = $(event.target);
   });
 
-  $('.add-product-button').on('click', function() {
-    if ('session[:id]') {
-      console.log('logged in')
-      addProduct
-    } else {
-      console.log('not logged in')
-      event.preventDefault();
-      event.stopPropagation();
-      $.get('new_user_session_path');
-    }
-  })
+  $('.add-product-button').on('click', addProduct)
 
   $('.multiSelect input[type="checkbox"]').on('click', function() {
     var title = $(this).closest('.multiSelect,li').text()+',';
