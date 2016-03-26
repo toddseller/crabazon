@@ -33,17 +33,15 @@ ActiveRecord::Schema.define(version: 20160326020705) do
   add_index "categories_products", ["product_id"], name: "index_categories_products_on_product_id", using: :btree
 
   create_table "orders", force: :cascade do |t|
-    t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer "user_id"
   end
 
+  add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
+
   create_table "orders_products", force: :cascade do |t|
-    t.integer  "product_id"
-    t.integer  "order_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "quantity"
+    t.integer "product_id"
+    t.integer "order_id"
+    t.integer "quantity"
   end
 
   add_index "orders_products", ["order_id"], name: "index_orders_products_on_order_id", using: :btree
