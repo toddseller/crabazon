@@ -1,29 +1,35 @@
 $(document).ready(function() {
-  $('.clickable-row').on('click', function() {
-    window.document.location = $(this).data('url');
-  });
-
-  $(document).bind('click', function(event) {
-    var $clicked = $(event.target);
-  });
-
-  $('.add-product-button').on('click', addProduct)
-
-  $('.multiSelect input[type="checkbox"]').on('click', function() {
-    var title = $(this).closest('.multiSelect,li').text()+',';
-
-    if ($(this).is(':checked')) {
-      var html = '<span title="' + title + '">' + title + '</span>';
-      $('.multiSel').append(html);
-      $('.multiSel').css('text-align', 'left');
-      $('.hida').hide();
-    } else {
-      $('span[title="' + title + '"]').remove();
-      var ret = $('.hida');
-      $('.dropdown button span').append(ret);
-    }
-  });
+  bindListeners();
 });
+
+var bindListeners = function() {
+  $('.clickable-row').on('click', redirectProductUrl);
+  $('.add-product-button').on('click', addProduct);
+  $('.multiSelect input[type="checkbox"]').on('click', multiSelectCheckboxes);
+  $('#checkout-now').on('click', redirectCheckoutUrl);
+}
+
+var multiSelectCheckboxes = function() {
+  var title = $(this).closest('.multiSelect,li').text()+',';
+  if ($(this).is(':checked')) {
+    var html = '<span title="' + title + '">' + title + '</span>';
+    $('.multiSel').append(html);
+    $('.multiSel').css('text-align', 'left');
+    $('.hida').hide();
+  } else {
+    $('span[title="' + title + '"]').remove();
+    var ret = $('.hida');
+    $('.dropdown button span').append(ret);
+  }
+}
+
+var redirectCheckoutUrl = function() {
+  window.document.location = $(this).data('url');
+}
+
+var redirectProductUrl = function() {
+  window.document.location = $(this).data('url');
+}
 
 var addProduct = function(event){
   event.preventDefault();
@@ -40,8 +46,9 @@ var addProduct = function(event){
 
 var updateCart = function(response) {
   $('#cart tbody').empty();
-  $.each(response, insertProduct)
-  $('.badge').empty().append(response.length);
+  $.each(response.cart, insertProduct)
+  insertTotal(response.cart_total)
+  $('.badge').empty().append(response.cart.length);
   $('#cart').modal('show');
 }
 
@@ -64,11 +71,28 @@ var buildRow = function(product) {
   $row.append(buildTd(product.quantity, 'text-center'));
 
   var total = (product.quantity * price).toFixed(2);
-  $row.append(buildTd(total, 'text-center').prepend('$'));
+  $row.append(buildTd(total, 'text-right').prepend('$'));
 
   return $row;
 }
 
 var buildTd = function(value, tdClass) {
   return $('<td class="' + tdClass + '"></td>').append(value);
+}
+
+var insertTotal = function(total) {
+  var formattedTotal = parseFloat(total).toFixed(2)
+  $row = buildTotalRow(formattedTotal);
+  $('#cart tbody').append($row);
+}
+
+var buildTotalRow = function(total) {
+    var total = total;
+    var $row = $('<tr></tr>');
+    $row.append(buildTd());
+    $row.append(buildTd());
+    $row.append(buildTd());
+    $row.append(buildTd());
+    $row.append(buildTd(total, 'text-right').prepend('$'));
+    return $row;
 }
