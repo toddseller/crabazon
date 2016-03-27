@@ -276,6 +276,30 @@ td.clickable-row:hover {
   width: 472px;
 }
 
+.order-qty {
+  width: 65px;
+  text-align: right;
+}
+
+.order-delete {
+  color: #e58c33;
+  font-size: 18px;
+}
+
+a.order-delete:hover {
+  color: #f19833;
+  cursor: pointer;
+}
+
+.checkout-image {
+  width: 30%;
+  height: auto;
+}
+
+.order-checkout {
+
+}
+
 button#dropdownCategories.btn.btn-default.dropdown-toggle {
   width: 100%;
   text-align: right;
