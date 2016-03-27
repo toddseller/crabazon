@@ -10,6 +10,8 @@ var bindListeners = function() {
   $('.glyphicon-trash').on('click', deleteProduct);
   $('#order-update').on('click', updateProductQuantity);
   $('#order-checkout').on('click', checkout);
+
+
 }
 
 var multiSelectCheckboxes = function() {
@@ -41,11 +43,32 @@ var addProduct = function(event){
   var id = button_id.slice(4);
 
     $.ajax({url: "/carts/" + id , 
-         type: 'POST',
-         dataType: 'json',
-         success: updateCart
-         });
+         type: 'POST'
+    }).done(function(response){
+      console.log(response.quantity_available)
+      if (response.quantity_available <= 0){
+        console.log(response.quantity_available)
+        $("#" + button_id).prop('disabled', true)
+      };
+
+      $('#cart tbody').empty();
+      $.each(response.cart, insertProduct)
+      insertTotal(response.cart_total)
+      $('.badge').empty().append(response.cart.length);
+      $('#cart').modal('show');
+
+    })
+         //change the button if product is disabled
 }
+
+var updateCart = function(response) {
+  $('#cart tbody').empty();
+  $.each(response.cart, insertProduct)
+  insertTotal(response.cart_total)
+  $('.badge').empty().append(response.cart.length);
+  $('#cart').modal('show');
+}
+
 
 var deleteProduct = function(event){
   event.preventDefault();
@@ -63,9 +86,11 @@ var deleteProduct = function(event){
     $(this).parent().parent().parent().hide()
 }
 
-var changeTotalPrice = function(price){
-  $('#totalCartPrice').remove()
-  // exchange price total here 
+var changeTotalPrice = function(response){
+  $('#totalCartPrice').empty()
+  var text = response.cart_total
+  $('#totalCartPrice').append(text)
+
 }
 
 
@@ -80,13 +105,7 @@ var updateProductQuantity = function(event){
          });
 }
 
-var updateCart = function(response) {
-  $('#cart tbody').empty();
-  $.each(response.cart, insertProduct)
-  insertTotal(response.cart_total)
-  $('.badge').empty().append(response.cart.length);
-  $('#cart').modal('show');
-}
+
 
 var insertProduct = function(index, product) {
   $row = buildRow(product);
@@ -118,7 +137,9 @@ var checkout = function(){
 
   $.ajax({url: "/orders" , 
          type: 'POST'
-         });}
+         }).done(function(response){
+         })
+}
 
 var buildTd = function(value, tdClass) {
   return $('<td class="' + tdClass + '"></td>').append(value);

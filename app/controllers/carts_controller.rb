@@ -33,7 +33,10 @@ class CartsController < ApplicationController
 
     @cart = build_cart(product_data)
     @cart_total = calculate_cart(product_data)
-    response = { cart: @cart, cart_total: @cart_total}
+    @quantity_available = calculate_quantity_available(product_id)
+    p "%%%%%%%%%%%%%%%%"
+    p @quantity_available
+    response = { cart: @cart, cart_total: @cart_total, quantity_available: @quantity_available}
     if request.xhr?
       respond_to do |format|
         format.json { render json: response}
@@ -43,6 +46,14 @@ class CartsController < ApplicationController
     end
   end
 
+  def calculate_quantity_available(product_id)
+    p Product.find(product_id).quantity
+    p product_id
+    p session[:cart][product_id].to_i
+    quantity_left = Product.find(product_id).quantity - session[:cart][product_id].to_i
+  
+  end
+
   def update_cart
     #loop through cart by index and update with searalized numbers 
     all_product_quantities  = params[:all_product_quantities]
@@ -50,6 +61,14 @@ class CartsController < ApplicationController
     product_data.each_with_index do |product, index|
       session[:cart][product[0]] = all_product_quantities["#{index}"]["value"].to_i 
     end
+
+    # response = { quantity_available: @quantity_available}
+    # if request.xhr?
+    #   respond_to do |format|
+    #     format.json { render json: response}
+    # end
+    
+
     redirect_to '/orders'
     
   end
@@ -70,7 +89,9 @@ class CartsController < ApplicationController
       total = (product["price"] * product_data[product_id.to_s])
       cart_total += total
     end
-      cart_total
+      session[:cart_total] = cart_total
+      return cart_total
+
   end 
 
 end
