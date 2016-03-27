@@ -7,6 +7,11 @@ var bindListeners = function() {
   $('.add-product-button').on('click', addProduct);
   $('.multiSelect input[type="checkbox"]').on('click', multiSelectCheckboxes);
   $('#checkout-now').on('click', redirectCheckoutUrl);
+  $('.glyphicon-trash').on('click', deleteProduct);
+  $('#order-update').on('click', updateProductQuantity);
+  $('#order-checkout').on('click', checkout);
+
+
 }
 
 var multiSelectCheckboxes = function() {
@@ -38,10 +43,22 @@ var addProduct = function(event){
   var id = button_id.slice(4);
 
     $.ajax({url: "/carts/" + id , 
-         type: 'POST',
-         dataType: 'json',
-         success: updateCart
-         });
+         type: 'POST'
+    }).done(function(response){
+      console.log(response.quantity_available)
+      if (response.quantity_available <= 0){
+        console.log(response.quantity_available)
+        $("#" + button_id).prop('disabled', true)
+      };
+
+      $('#cart tbody').empty();
+      $.each(response.cart, insertProduct)
+      insertTotal(response.cart_total)
+      $('.badge').empty().append(response.cart.length);
+      $('#cart').modal('show');
+
+    })
+         //change the button if product is disabled
 }
 
 var updateCart = function(response) {
@@ -51,6 +68,44 @@ var updateCart = function(response) {
   $('.badge').empty().append(response.cart.length);
   $('#cart').modal('show');
 }
+
+
+var deleteProduct = function(event){
+  event.preventDefault();
+  event.stopPropagation();
+  var button_id = $(this).attr('id');
+  console.log(button_id)
+
+  var id = button_id.slice(6);
+  console.log(id)
+
+    $.ajax({url: "/carts/" + id , 
+         type: 'DELETE',
+         dataType: 'json',
+         success: changeTotalPrice });
+    $(this).parent().parent().parent().hide()
+}
+
+var changeTotalPrice = function(response){
+  $('#totalCartPrice').empty()
+  var text = response.cart_total
+  $('#totalCartPrice').append(text)
+
+}
+
+
+var updateProductQuantity = function(event){
+  event.preventDefault();
+  event.stopPropagation();
+  console.log("what up bitch")
+    $.ajax({url: "/carts" , 
+         type: 'POST',
+         data: {all_product_quantities: $('form').serializeArray()},
+         dataType: 'json'
+         });
+}
+
+
 
 var insertProduct = function(index, product) {
   $row = buildRow(product);
@@ -74,6 +129,16 @@ var buildRow = function(product) {
   $row.append(buildTd(total, 'text-right').prepend('$'));
 
   return $row;
+}
+
+var checkout = function(){
+   event.preventDefault();
+   event.stopPropagation();
+
+  $.ajax({url: "/orders" , 
+         type: 'POST'
+         }).done(function(response){
+         })
 }
 
 var buildTd = function(value, tdClass) {
