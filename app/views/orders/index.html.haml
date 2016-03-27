@@ -20,11 +20,11 @@
                 %td= product.name
                 %td.text-center= number_with_precision(product.price, precision: 2)
                 %td
-                  %input.form-control.order-qty.center-block{:name => "quantity", :type => "number", :value => product.quantity}
+                  %input.form-control.order-qty.center-block{:name => "quantity_#{product.id}", :type => "number", :value => session[:cart]["#{product.id}"]}
                 %td.text-center= number_with_precision((product.price * product.quantity), precision: 2)
                 %td
                   %a.order-delete
-                    %i.glyphicon.glyphicon-trash
+                    %i.glyphicon.glyphicon-trash{:id => "trash_#{product.id}"}
         .order-checkout.pull-right
           %button#order-update.btn.btn-default{type: 'submit'} Update
           %button#order-checkout.btn.btn-primary Checkout

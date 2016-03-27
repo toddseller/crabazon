@@ -7,6 +7,9 @@ var bindListeners = function() {
   $('.add-product-button').on('click', addProduct);
   $('.multiSelect input[type="checkbox"]').on('click', multiSelectCheckboxes);
   $('#checkout-now').on('click', redirectCheckoutUrl);
+  $('.glyphicon-trash').on('click', deleteProduct);
+  $('#order-update').on('click', updateProductQuantity);
+  $('#order-checkout').on('click', checkout);
 }
 
 var multiSelectCheckboxes = function() {
@@ -44,6 +47,39 @@ var addProduct = function(event){
          });
 }
 
+var deleteProduct = function(event){
+  event.preventDefault();
+  event.stopPropagation();
+  var button_id = $(this).attr('id');
+  console.log(button_id)
+
+  var id = button_id.slice(6);
+  console.log(id)
+
+    $.ajax({url: "/carts/" + id , 
+         type: 'DELETE',
+         dataType: 'json',
+         success: changeTotalPrice });
+    $(this).parent().parent().parent().hide()
+}
+
+var changeTotalPrice = function(price){
+  $('#totalCartPrice').remove()
+  // exchange price total here 
+}
+
+
+var updateProductQuantity = function(event){
+  event.preventDefault();
+  event.stopPropagation();
+  console.log("what up bitch")
+    $.ajax({url: "/carts" , 
+         type: 'POST',
+         data: {all_product_quantities: $('form').serializeArray()},
+         dataType: 'json'
+         });
+}
+
 var updateCart = function(response) {
   $('#cart tbody').empty();
   $.each(response.cart, insertProduct)
@@ -75,6 +111,14 @@ var buildRow = function(product) {
 
   return $row;
 }
+
+var checkout = function(){
+   event.preventDefault();
+   event.stopPropagation();
+
+  $.ajax({url: "/orders" , 
+         type: 'POST'
+         });}
 
 var buildTd = function(value, tdClass) {
   return $('<td class="' + tdClass + '"></td>').append(value);
