@@ -41,8 +41,11 @@
               = link_to 'Admin', admin_index_path, class: 'btn btn-default navbar-btn btn-two'
             = link_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-success navbar-btn btn-one'
   %body
-    %p.notice= notice
-    %p.alert= alert
+    .container
+      .row
+        .col-sm-12
+          %p.notice.text-center= notice
+          %p.alert.text-center= alert
     = yield
     #cart.modal.fade{:role => "dialog", :tabindex => "-1"}
       .modal-dialog

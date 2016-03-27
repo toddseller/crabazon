@@ -13,6 +13,7 @@
               %th.text-center Quantity
               %th.text-center Total
           %tbody
+          -if session[:cart]
             - session[:cart].each do |item|
               %tr
                 - p product = Product.find(item[0])
@@ -25,6 +26,7 @@
                 %td
                   %a.order-delete
                     %i.glyphicon.glyphicon-trash{:id => "trash_#{product.id}"}
-        .order-checkout.pull-right
-          %button#order-update.btn.btn-default{type: 'submit'} Update
-          %button#order-checkout.btn.btn-primary Checkout
+        - if session[:cart]
+          .order-checkout.pull-right
+            %button#order-update.btn.btn-default{type: 'submit'} Update
+            %button#order-checkout.btn.btn-primary Checkout
