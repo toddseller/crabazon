@@ -1,23 +1,9 @@
 class CartsController < ApplicationController
 
-  # def new
-  #     session[:cart] = []
-  # end
-  #Index shows all cart 
-  def show
-      # @products = cart_session.cart_contents
-    end
-
-  #Add
-  def add
-    product_id = params[:product_id]
-    if !session[:cart] 
-      session[:cart] = {}
-    end
+  def remove
     product_data = session[:cart]
-
-    product_data[:product_id]
-    product_data[product_id] ? product_data[product_id] += 1 : product_data[product_id] = 1
+    product_id = params[:product_id]
+    session[:cart].delete(product_id)
 
     @cart = build_cart(product_data)
     @cart_total = calculate_cart(product_data)
@@ -30,6 +16,63 @@ class CartsController < ApplicationController
       redirect_to '/'
     end
   end
+
+  #Index shows all cart 
+  def show
+      # @products = cart_session.cart_contents
+  end
+
+  #Add
+  def add
+    product_id = params[:product_id]
+    if !session[:cart] 
+      session[:cart] = {}
+    end
+    product_data = session[:cart]
+    product_data[product_id] ? product_data[product_id] += 1 : product_data[product_id] = 1
+
+    @cart = build_cart(product_data)
+    @cart_total = calculate_cart(product_data)
+    @quantity_available = calculate_quantity_available(product_id)
+    p "%%%%%%%%%%%%%%%%"
+    p @quantity_available
+    response = { cart: @cart, cart_total: @cart_total, quantity_available: @quantity_available}
+    if request.xhr?
+      respond_to do |format|
+        format.json { render json: response}
+      end
+    else
+      redirect_to '/'
+    end
+  end
+
+  def calculate_quantity_available(product_id)
+    p Product.find(product_id).quantity
+    p product_id
+    p session[:cart][product_id].to_i
+    quantity_left = Product.find(product_id).quantity - session[:cart][product_id].to_i
+  
+  end
+
+  def update_cart
+    #loop through cart by index and update with searalized numbers 
+    all_product_quantities  = params[:all_product_quantities]
+    product_data = session[:cart]
+    product_data.each_with_index do |product, index|
+      session[:cart][product[0]] = all_product_quantities["#{index}"]["value"].to_i 
+    end
+
+    # response = { quantity_available: @quantity_available}
+    # if request.xhr?
+    #   respond_to do |format|
+    #     format.json { render json: response}
+    # end
+    
+
+    redirect_to '/orders'
+    
+  end
+
 
   private
 
@@ -46,33 +89,10 @@ class CartsController < ApplicationController
       total = (product["price"] * product_data[product_id.to_s])
       cart_total += total
     end
-      cart_total
+      session[:cart_total] = cart_total
+      return cart_total
+
   end 
-
-  # #Delete
-  # def remove
-  #     session[:cart] ||={}
-  #     products = session[:cart][:products]
-  #     id = params[:id]
-  #     all = params[:all]
-
-  #     #Is ID present?
-  #     unless id.blank?
-  #         unless all.blank?
-  #             products.delete(params['id'])
-  #         else
-  #             products.delete_at(products.index(id) || products.length)
-  #         end
-  #     else
-  #         products.delete
-  #     end
-
-  #     #Handle the request
-  #     respond_to do |format|
-  #         format.json { render json: cart_session.build_json }
-  #         format.html { redirect_to cart_index_path }
-  #     end
-  # end
 
 end
 
