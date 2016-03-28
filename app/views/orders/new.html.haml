@@ -1,0 +1,45 @@
+.container
+  .row
+    .col-sm-12
+      %img.checkout-image.center-block{:alt => 'Macrabz Emporium', :src => '/assets/crabazon-f28845d00b5333dd7aee565e3d6881796a5c03a66e46a1ff13ba5dfb2cebdac1.svg'}
+      %h1.text-center.index-header Order Checkout!
+      %form{action: '/orders', method: 'POST'}
+        %table#cart.table
+          %thead
+            %tr
+              %th
+              %th Product Name
+              %th.text-center Price
+              %th.text-right Quantity
+              %th
+              %th
+              %th.text-right Total
+          %tbody
+          -if session[:cart]
+            - session[:cart].each do |item|
+              %tr
+                - p product = Product.find(item[0])
+                %td.admin-image= image_tag(product.product_image)
+                %td= product.name
+                %td.text-center= number_with_precision(product.price, precision: 2)
+                %td
+                  %input.form-control.order-qty.pull-right{:name => "quantity_#{product.id}", :type => "number", :value => session[:cart]["#{product.id}"], :min => 0, :max => product.quantity}
+                %td.text-right
+                  %a.order-delete
+                    %i.glyphicon.glyphicon-trash{:id => "trash_#{product.id}"}
+                %td.text-left
+                  %a.order-update
+                    %i.glyphicon.glyphicon-refresh{:id => "update_#{product.id}"}
+                %td.text-right{:id => "total_#{product.id}"}= "$#{number_with_precision((product.price * session[:cart][product.id.to_s]), precision: 2)}" 
+            %tr
+              %td
+              %td
+              %td
+              %td
+              %td
+              %td
+              %td.text-right{:id => "totalCartPrice"}
+                = "$#{number_with_precision(session[:cart_total], precision: 2)}"
+        - if session[:cart]
+          .order-checkout.pull-right
+            %button#order-checkout.btn.btn-primary{type: 'submit'} Checkout

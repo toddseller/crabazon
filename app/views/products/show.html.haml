@@ -1,13 +1,23 @@
 .container
   .row
     .col-lg-12
-      .col-lg-7
-        %h1.product-page-header.text-center= @product.name
-        %p.product-page-desc.text-center= @product.description
-        %button.btn.btn-primary.btn-lg.center-block.add-product-button{:id => "add_#{@product.id}"} Add Product
-      .col-lg-4
+      .col-lg-4.pull-right
         %h1.product-page-price.text-right
           %sup.product-dollar $ 
           = number_with_precision(@product.price, precision: 2)
         .product-page-image.push-right
           = image_tag(@product.product_image)
+      .col-lg-7
+        %h1.product-page-header.text-center= @product.name
+        %p.product-page-desc.text-center= @product.description
+        .col-lg-12.product-page-info
+          .col-lg-4
+            %p.product-page-qty= "Qty: #{@product.quantity}"
+          .col-lg-8
+            %p.text-center
+              - @product.categories.each do |category|
+                = link_to category.name, "/categories/#{category.id}"
+        - if @product.quantity == 0 || session[:cart][@product.id.to_s].to_i >= @product.quantity.to_i
+          %button.btn.btn-primary.btn-lg.center-block.add-product-button.product-page-add{:id => "add_#{@product.id}", :disabled => ""} Add to Cart
+        - else
+          %button.btn.btn-primary.btn-lg.center-block.add-product-button.product-page-add{:id => "add_#{@product.id}", 'data-toggle' => 'modal', 'data-target' => '#cart'} Add to Cart

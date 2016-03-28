@@ -39,7 +39,7 @@ class CartsController < ApplicationController
     response = { cart: @cart, cart_total: @cart_total, quantity_available: @quantity_available}
     if request.xhr?
       respond_to do |format|
-        format.json { render json: response}
+        format.json { render json: response }
       end
     else
       redirect_to '/'
@@ -56,29 +56,35 @@ class CartsController < ApplicationController
 
   def update_cart
     #loop through cart by index and update with searalized numbers 
-    all_product_quantities  = params[:all_product_quantities]
+    product_id = params[:id]
+    product_quantities  = params[:product_quantities]
     product_data = session[:cart]
-    product_data.each_with_index do |product, index|
-      session[:cart][product[0]] = all_product_quantities["#{index}"]["value"].to_i 
+    p "*" * 25
+    test = product_data.select { |k,v| k == product_id }
+  
+    session[:cart][product_id] = product_quantities.to_i
+    @cart = build_cart(test)
+    @cart_total = calculate_cart(product_data)
+    response = { cart: @cart, cart_total: @cart_total }
+    if request.xhr?
+      respond_to do |format|
+        format.json { render json: response }
+      end
+    else
+      redirect_to '/orders'
     end
-
-    # response = { quantity_available: @quantity_available}
-    # if request.xhr?
-    #   respond_to do |format|
-    #     format.json { render json: response}
-    # end
-    
-
-    redirect_to '/orders'
-    
   end
 
 
   private
 
+  def build_item(product)
+    cart = Product.find(product)
+  end
+
   def build_cart(product_data)
     cart = Product.find(product_data.keys).map(&:attributes)
-    cart.each { |product| product['quantity'] = product_data[product['id'].to_s] }
+    cart.each { |product| product['cart_quantity'] = product_data[product['id'].to_s] }
   end
 
   def calculate_cart(product_data)
@@ -89,8 +95,8 @@ class CartsController < ApplicationController
       total = (product["price"] * product_data[product_id.to_s])
       cart_total += total
     end
-      session[:cart_total] = cart_total
-      return cart_total
+    session[:cart_total] = cart_total
+    return cart_total
 
   end 
 

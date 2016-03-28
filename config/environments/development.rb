@@ -48,6 +48,6 @@ Rails.application.configure do
     authentication:       'plain',
     enable_starttls_auto: true
   }
-  config.action_mailer.perform_deliveries = true
-  config.action_mailer.delivery_method = :sendmail
+  # config.action_mailer.perform_deliveries = true
+  # config.action_mailer.delivery_method = :sendmail
 end
