@@ -129,7 +129,7 @@
                                     <td style="font-size: 16px; color: #a2a2a2; font-weight: normal; text-align: center; font-family: Helvetica, Arial, sans-serif; line-height: 28px; vertical-align: top; padding:0px 20px">
                                       <table width="100%">
                                         <tr>
-                                          <td style="font-family: Helvetica, Arial, sans-serif; font-size: 45px; color: #323a45; text-align:center; line-height: 50px; padding: 4px 2px;">
+                                          <td style="font-family: Helvetica, Arial, sans-serif; font-size: 30px; color: #323a45; text-align:center; line-height: 50px; padding: 4px 2px;">
                                             <span style="font-family: 'Roboto', Helvetica, Arial, sans-serif !important;">Crabazon Order Number <%= @order.id %></span>
                                         </tr>
                                         <tr>
@@ -137,56 +137,58 @@
                                         </tr>
                                       </table>
                                       <p style="mso-table-lspace:0;mso-table-rspace:0; margin:0; padding:0 1px">
-                                        <span style="font-family: 'Roboto', Helvetica, Arial, sans-serif !important;">Thank you for your recent Crabazon order. We will be shipping it to you shortly. That is, once we take out all the good stuff!</span>
+                                        <span style="font-family: 'Roboto', Helvetica, Arial, sans-serif !important;">Thank you for your recent Crabazon order. We will be shipping it to you shortly.<br/>That is, once we take out all the good stuff!</span>
                                       </p>
                                       <p style="mso-table-lspace:0;mso-table-rspace:0; margin:0; padding:0 1px">
                                         <span style="font-family: 'Roboto', Helvetica, Arial, sans-serif !important;">Here is a summary of your order:</span>
                                       </p>
-                                      <p style="mso-table-lspace:0;mso-table-rspace:0; margin:0; padding:15px 1px">
-                                        <span style="font-family: 'Roboto', Helvetica, Arial, sans-serif !important;">
-                                          <table>
-                                            <thead>
-                                              <tr>
-                                                <th></th>
-                                                <th style="text-align: center;">Product Name</th>
-                                                <th style="text-align: center;">Price</th>
-                                                <th style="text-align: center;">Quantity</th>
-                                                <th style="text-align: right;">Total</th>
-                                              </tr>
-                                            </thead>
-                                            <tbody>
-                                              <% @order.products.each do |product| %>
+                                      <table class="devicewidth" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        <tr>
+                                          <td>
+                                            <table class="deviceWidth" rightmargin="0" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#ffffff">
+                                              <thead>
                                                 <tr>
-                                                  <td>
-                                                    <img src=<%= "#{product.product_image}" %> width="50px" height="auto" alt="Product Image"/>
-                                                  </td>
-                                                  <td style="text-align: center;">
-                                                    <%= product.name %>
-                                                  </td>
-                                                  <td style="text-align: center;">
-                                                    <%= "$#{number_with_precision(product.price, precision: 2)}" %>
-                                                  </td>
-                                                  <td style="text-align: center;">
-                                                    <%= @order.orders_product.find_by(product_id: product.id).quantity %>
-                                                  </td>
-                                                  <td style="text-align: right;">
-                                                    <%= "$#{number_with_precision((product.price * @order.orders_product.find_by(product_id: product.id).quantity), precision: 2)}" %>
+                                                  <th width="100" style="width: 100px;"></th>
+                                                  <th width="300" style="width: 300px; text-align: center;">Product Name</th>
+                                                  <th width="75" style="width: 75px; text-align: center;">Price</th>
+                                                  <th width="75" style="width: 75px; text-align: center;">Quantity</th>
+                                                  <th width="75" style="width: 75px;t ext-align: right;">Total</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                                <% @order.products.each do |product| %>
+                                                  <tr>
+                                                    <td width="100" style="width: 100px;">
+                                                      <img src=<%= "#{product.product_image}" %> width="50px" height="auto" alt="Product Image"/>
+                                                    </td>
+                                                    <td width="300" style="width: 300px; text-align: center;">
+                                                      <%= product.name %>
+                                                    </td>
+                                                    <td width="75" style="width: 75px; text-align: center;">
+                                                      <%= "$#{number_with_precision(product.price, precision: 2)}" %>
+                                                    </td>
+                                                    <td width="75" style="width: 75px; text-align: center;">
+                                                      <%= @order.orders_product.find_by(product_id: product.id).quantity %>
+                                                    </td>
+                                                    <td width="75" style="width: 75px; text-align: right;">
+                                                      <%= "$#{number_with_precision((product.price * @order.orders_product.find_by(product_id: product.id).quantity), precision: 2)}" %>
+                                                    </td>
+                                                  </tr>
+                                                <% end %>
+                                                <tr>
+                                                  <td width="100" style="width: 100px;"></td>
+                                                  <td width="300" style="width: 300px;"></td>
+                                                  <td width="75" style="width: 75px;"></td>
+                                                  <td width="75" style="width: 75px;"></td>
+                                                  <td width="75" style="width: 75px; text-align: right;">
+                                                    <%= "$#{number_with_precision(@order.total, precision: 2)}" %>
                                                   </td>
                                                 </tr>
-                                              <% end %>
-                                              <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td style="text-align: right;">
-                                                  <%= "$#{number_with_precision(@order.total, precision: 2)}" %>
-                                                </td>
-                                              </tr>
-                                            </tbody>
-                                          </table>
-                                        </span>
-                                      </p>
+                                              </tbody>
+                                            </table>
+                                          </td>
+                                        </tr>
+                                      </table>
                                       <p style="mso-table-lspace:0;mso-table-rspace:0; margin:0; padding:5px 1px">
                                         <span style="font-size: 24px;font-family: 'Roboto', Helvetica, Arial, sans-serif !important;">Drugs? No problem, as long as we can party with you!</span>
                                       </p>
