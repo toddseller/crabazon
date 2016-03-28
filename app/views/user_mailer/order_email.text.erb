@@ -1,0 +1,14 @@
+Crabazon Order Number <%= @order.id %>
+=======================================
+
+Thank you for your recent Crabazon order. We will be shipping it to you shortly. That is, once we take out all the good stuff! Here is a summary of your order:
+
+<% @order.products.each do |product| %>
+  <%= product.name %>
+  Price: <%= "$#{number_with_precision(product.price, precision: 2)}" %>
+  Qty: <%= @order.orders_product.find_by(product_id: product.id).quantity %>
+  Total: <%= "$#{number_with_precision((product.price * @order.orders_product.find_by(product_id: product.id).quantity), precision: 2)}" %>
+  _____________________________________
+<% end %>
+
+Order Total: <%= "$#{number_with_precision(@order.total, precision: 2)}" %>
