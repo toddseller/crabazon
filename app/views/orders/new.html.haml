@@ -25,7 +25,7 @@
                 %td
                   %input.form-control.order-qty.pull-right{:name => "quantity_#{product.id}", :type => "number", :value => session[:cart]["#{product.id}"], :min => 0, :max => product.quantity}
                 %td.text-right
-                  %a.order-delete
+                  %a.order-delete{:href => '#'}
                     %i.glyphicon.glyphicon-trash{:id => "trash_#{product.id}"}
                 %td.text-left
                   %a.order-update

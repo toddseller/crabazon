@@ -54,7 +54,7 @@ var addProduct = function(event){
       $.each(response.cart, insertProduct)
       insertTotal(response.cart_total)
       $('.badge').empty().append(response.cart.length);
-      $('#cart').modal('show');
+      $('#cart-modal').modal('show');
 
     })
          //change the button if product is disabled
@@ -74,8 +74,7 @@ var deleteProduct = function(event){
   event.stopPropagation();
   var button_id = $(this).attr('id');
 
-  var id = button_id.slice(6);
-  console.log(button_id)
+  var id = button_id.slice(7);
     $.ajax({url: "/carts/" + id , 
          type: 'DELETE',
          dataType: 'json',
@@ -88,16 +87,13 @@ var changeTotalPrice = function(response){
   $('#totalCartPrice').empty()
   var text = parseFloat(response.cart_total).toFixed(2)
   $('#totalCartPrice').append(text)
-
 }
 
 var updateProductQuantity = function(event){
-  console.log('FUCK!!!!!!!!')
   event.preventDefault();
   event.stopPropagation();
   var id = $(this).attr('id').slice(7)
   var value = $('input[name="quantity_' + id + '"]').val()
-  console.log(value)
   $.ajax({
       url: "/carts" , 
       type: 'POST',
@@ -118,6 +114,7 @@ var updateProductQuantity = function(event){
 var insertProduct = function(index, product) {
   $row = buildRow(product);
   $('#cart tbody').append($row);
+  bindListeners()
 }
 
 var buildRow = function(product) {
@@ -134,6 +131,9 @@ var buildRow = function(product) {
   var $qty = $('<input class="pull-right form-control order-qty" type="number" name="quantity_' + product.id + '" value="' + product.cart_quantity + '" min="0" max="' + product.quantity + '"/>')
   $row.append(buildTd($qty));
 
+  var $delete = $('<a class="order-delete"><i class="glyphicon glyphicon-trash" id="delete_' + product.id + '"></i></a>')
+  $row.append(buildTd($delete, 'text-right'))
+
   var $update = $('<a class="order-update"><i class="glyphicon glyphicon-refresh" id="update_' + product.id + '"></i></a>')
   $row.append(buildTd($update, 'text-left'))
 
@@ -146,12 +146,10 @@ var buildRow = function(product) {
 var checkout = function(event){
   event.preventDefault();
   // event.stopPropagation();
-  console.log('Here I am')
   $.ajax({url: "/orders", 
          type: 'POST',
          success: displayOrder
        })
-  console.log('Here I go')
 }
 
 var displayOrder = function(response) {
@@ -171,6 +169,7 @@ var insertTotal = function(total) {
 var buildTotalRow = function(total) {
     var total = total;
     var $row = $('<tr></tr>');
+    $row.append(buildTd());
     $row.append(buildTd());
     $row.append(buildTd());
     $row.append(buildTd());
