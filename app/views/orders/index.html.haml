@@ -16,6 +16,6 @@
               %td.text-center
                 = link_to "Order Number #{order.id}", order_path(order)
               %td.text-center= order.order_date.localtime.to_s(:long)
-              %td.text-center= order.total
+              %td.text-center= number_with_precision(order.total, precision: 2)
       
 
