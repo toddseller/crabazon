@@ -87,6 +87,7 @@ var changeTotalPrice = function(response){
   $('#totalCartPrice').empty()
   var text = parseFloat(response.cart_total).toFixed(2)
   $('#totalCartPrice').append(text)
+  $('.badge').empty().append(response.cart.length);
 }
 
 var updateProductQuantity = function(event){
