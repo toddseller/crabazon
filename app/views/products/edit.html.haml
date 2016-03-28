@@ -10,7 +10,7 @@
         %h1.text-center.edit-header
           Edit #{@product.name}
         .col-lg-4
-          %img{:alt => "#{@product.name} Image", :src => @product.product_image}
+          %img{:alt => "#{@product.name} Image", :src => @product.product_image :width => "300" :height => "auto"}
         .col-lg-8.form-center
           - if flash[:error]
             #flash.error
