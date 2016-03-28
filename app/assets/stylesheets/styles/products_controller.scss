@@ -337,6 +337,11 @@ td.clickable-row:hover {
   font-size: 18px;
 }
 
+.product-edit-image img {
+  width: 300px;
+  height: auto;
+}
+
 a.order-delete:hover {
   color: #f19833;
   cursor: pointer;
@@ -470,8 +475,4 @@ div.mutliSelect {
   .navbar {
     height: 50px;
   }
-
-  // .user {
-  //   right: 50px;
-  // }
 }
