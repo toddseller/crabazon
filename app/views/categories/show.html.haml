@@ -3,20 +3,23 @@
     .col-sm-12
       %h1.text-center.index-header
         = "Welcome to #{@category.name}!"
-    .col-sm-12
+        .col-sm-12
       - @products.each do |product|
         .col-lg-3.col-md-4.col-sm-6-col-xs-12.pull-left.clear-fix.index-product
-          .product-box
+          .product-box.clickable-row{'data-url' => "/products/#{product.id}"}
             .index-price
               %h2.text-right
                 %sup.index-dollar $
-                = product.price
+                = product.price.truncate
             %img.index-image{:alt => "#{product.name} Image", :src => product.product_image}
               %h4= product.name
               .index-description
                 %p= product.description
-              %p.index-qty
-                Qty: #{product.quantity}
-              %p
-                - product.categories.each do |category|
-                  = link_to category.name, "/categories/#{category.id}"
+            .product-button
+              - if user_signed_in?
+                - if product.quantity == 0 || session[:cart][product.id.to_s].to_i >= product.quantity.to_i
+                  %button.btn.btn-primary-2.btn-lg.center-block.add-product-button{:id => "add_#{product.id}", :disabled => ""} Add to Cart
+                - else
+                  %button.btn.btn-primary-2.btn-lg.center-block.add-product-button{:id => "add_#{product.id}", 'data-toggle' => 'modal', 'data-target' => '#cart'} Add to Cart
+              - else
+                = link_to 'Add to Cart', new_user_session_path, class:'btn btn-primary-2 btn-lg center-block'

@@ -18,6 +18,15 @@ input[type="color"]:focus,
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(249, 145, 6, 0.6);
   outline: 0 none;
 }
+.user {
+  position: absolute;
+  right: 225px;
+  vertical-align: middle;
+}
+
+.user li {
+  display: inline-block;
+}
 
 .form-control:focus {
   border-color: rgba(249, 145, 6, 0.8);
@@ -78,6 +87,9 @@ body {
 .btn-primary:hover,
 .btn-primary:active:hover,
 .btn-primary.active:hover,
+.btn-primary.btn-lg:hover,
+.btn-primary.btn-lg:active:hover,
+.btn-primary.btn-lg.active:hover,
 .btn-primary-2:hover,
 .btn-primary-2:active:hover,
 .btn-primary-2.active:hover {
@@ -330,13 +342,35 @@ a.order-delete:hover {
   cursor: pointer;
 }
 
+.order-update {
+  color: #e58c33;
+}
+
+a.order-update:hover {
+  color: #f19833;
+  cursor: pointer;
+}
+
 .checkout-image {
   width: 30%;
   height: auto;
 }
 
 .order-checkout {
+  margin-bottom: 50px;
+}
 
+.product-page-add {
+  margin-top: 250px;
+}
+
+.product-page-qty {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.product-page-info {
+  margin-top: 175px;
 }
 
 button#dropdownCategories.btn.btn-default.dropdown-toggle {
@@ -362,6 +396,11 @@ div.mutliSelect {
 .modal-header-image {
   width: 150px;
   margin: 17px 5px 10px;
+}
+
+.order-image img {
+  width: 75px;
+  height: auto;
 }
 
 @media (max-width: 1199px) {
@@ -431,4 +470,8 @@ div.mutliSelect {
   .navbar {
     height: 50px;
   }
+
+  // .user {
+  //   right: 50px;
+  // }
 }

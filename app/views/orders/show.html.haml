@@ -1,2 +1,28 @@
-%h1
-	Bitches
+.container
+  .row
+    .col-lg-12
+      %img.checkout-image.center-block{:alt => 'Macrabz Emporium', :src => '/assets/crabazon-f28845d00b5333dd7aee565e3d6881796a5c03a66e46a1ff13ba5dfb2cebdac1.svg'}
+      %h1.text-center.index-header= "Order Number #{@order.id}"
+    .col-sm-12
+      %table.table
+        %thead
+          %tr
+            %th
+            %th Product Name
+            %th.text-center Price
+            %th.text-center Quantity
+            %th.text-right Total
+        %tbody
+          - @order.products.each do |product|
+            %tr
+              %td.order-image= image_tag(product.product_image)
+              %td= product.name
+              %td.text-center= "$#{number_with_precision(product.price, precision: 2)}"
+              %td.text-center= @order.orders_product.find_by(product_id: product.id).quantity
+              %td.text-right= "$#{number_with_precision((product.price * @order.orders_product.find_by(product_id: product.id).quantity), precision: 2)}"
+          %tr
+            %td
+            %td
+            %td
+            %td
+            %td.text-right= "$#{number_with_precision(@order.total, precision: 2)}"
