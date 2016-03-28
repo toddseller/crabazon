@@ -3,12 +3,13 @@ $(document).ready(function() {
 });
 
 var bindListeners = function() {
+
   $('.clickable-row').on('click', redirectProductUrl);
   $('.add-product-button').on('click', addProduct);
   $('.multiSelect input[type="checkbox"]').on('click', multiSelectCheckboxes);
   $('#checkout-now').on('click', redirectCheckoutUrl);
   $('.glyphicon-trash').on('click', deleteProduct);
-  $('#order-update').on('click', updateProductQuantity);
+  $('.glyphicon-refresh').on('click', updateProductQuantity);
   $('#order-checkout').on('click', checkout);
 
 
@@ -45,12 +46,10 @@ var addProduct = function(event){
     $.ajax({url: "/carts/" + id , 
          type: 'POST'
     }).done(function(response){
-      console.log(response.quantity_available)
+  
       if (response.quantity_available <= 0){
-        console.log(response.quantity_available)
         $("#" + button_id).prop('disabled', true)
       };
-
       $('#cart tbody').empty();
       $.each(response.cart, insertProduct)
       insertTotal(response.cart_total)
@@ -74,38 +73,47 @@ var deleteProduct = function(event){
   event.preventDefault();
   event.stopPropagation();
   var button_id = $(this).attr('id');
-  console.log(button_id)
 
   var id = button_id.slice(6);
-  console.log(id)
-
+  console.log(button_id)
     $.ajax({url: "/carts/" + id , 
          type: 'DELETE',
          dataType: 'json',
-         success: changeTotalPrice });
+         success: changeTotalPrice
+    });
     $(this).parent().parent().parent().hide()
 }
 
 var changeTotalPrice = function(response){
   $('#totalCartPrice').empty()
-  var text = response.cart_total
+  var text = parseFloat(response.cart_total).toFixed(2)
   $('#totalCartPrice').append(text)
 
 }
 
-
 var updateProductQuantity = function(event){
+  console.log('FUCK!!!!!!!!')
   event.preventDefault();
   event.stopPropagation();
-  console.log("what up bitch")
-    $.ajax({url: "/carts" , 
-         type: 'POST',
-         data: {all_product_quantities: $('form').serializeArray()},
-         dataType: 'json'
-         });
+  var id = $(this).attr('id').slice(7)
+  var value = $('input[name="quantity_' + id + '"]').val()
+  console.log(value)
+  $.ajax({
+      url: "/carts" , 
+      type: 'POST',
+      data: {id: id, product_quantities: value},
+      dataType: 'json',
+      success: function(response) {
+        var total = (response.cart[0].price * value).toFixed(2)
+        var grandTotal = parseFloat(response.cart_total).toFixed(2)
+        if (response.quantity_available <= 0){
+          $("#" + button_id).prop('disabled', true)
+        };
+        $('#total_' + id).html('$' + total)
+        $('#totalCartPrice').html('$' + grandTotal)
 }
-
-
+  })
+}
 
 var insertProduct = function(index, product) {
   $row = buildRow(product);
@@ -123,26 +131,35 @@ var buildRow = function(product) {
   var price = parseFloat(product.price).toFixed(2);
   $row.append(buildTd(price, 'text-center').prepend('$'));
 
-  $row.append(buildTd(product.quantity, 'text-center'));
+  var $qty = $('<input class="pull-right form-control order-qty" type="number" name="quantity_' + product.id + '" value="' + product.cart_quantity + '" min="0" max="' + product.quantity + '"/>')
+  $row.append(buildTd($qty));
 
-  var total = (product.quantity * price).toFixed(2);
-  $row.append(buildTd(total, 'text-right').prepend('$'));
+  var $update = $('<a class="order-update"><i class="glyphicon glyphicon-refresh" id="update_' + product.id + '"></i></a>')
+  $row.append(buildTd($update, 'text-left'))
+
+  var total = (product.cart_quantity * price).toFixed(2);
+  $row.append(buildTd(total, "text-right", "total_" + product.id).prepend('$'));
 
   return $row;
 }
 
-var checkout = function(){
-   event.preventDefault();
-   event.stopPropagation();
-
-  $.ajax({url: "/orders" , 
-         type: 'POST'
-         }).done(function(response){
-         })
+var checkout = function(event){
+  event.preventDefault();
+  // event.stopPropagation();
+  console.log('Here I am')
+  $.ajax({url: "/orders", 
+         type: 'POST',
+         success: displayOrder
+       })
+  console.log('Here I go')
 }
 
-var buildTd = function(value, tdClass) {
-  return $('<td class="' + tdClass + '"></td>').append(value);
+var displayOrder = function(response) {
+  window.document.location = '/orders/' + response.id
+}
+
+var buildTd = function(value, tdClass, tdId) {
+  return $('<td class="' + tdClass + '" id="' + tdId + '"></td>').append(value);
 }
 
 var insertTotal = function(total) {
@@ -158,6 +175,7 @@ var buildTotalRow = function(total) {
     $row.append(buildTd());
     $row.append(buildTd());
     $row.append(buildTd());
-    $row.append(buildTd(total, 'text-right').prepend('$'));
+    $row.append(buildTd());
+    $row.append(buildTd(total, 'text-right', 'totalCartPrice').prepend('$'));
     return $row;
 }

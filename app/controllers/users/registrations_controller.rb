@@ -30,6 +30,7 @@ before_filter :configure_sign_up_params, only: [:create]
     @user = User.new(params[:user].permit(:name, :email, :password))
     respond_to do |format|
       if @user.save
+        session[:cart] = {}
         UserMailer.welcome_email(@user).deliver_now
         format.html { redirect_to(after_sign_in_path_for(resource), notice: 'User was successfully created.') }
         format.json { render json: @user, status: :created, location: @user }
