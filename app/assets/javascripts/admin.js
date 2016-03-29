@@ -11,7 +11,6 @@ var bindListeners = function() {
   $('.glyphicon-trash').on('click', deleteProduct);
   $('.glyphicon-refresh').on('click', updateProductQuantity);
   $('#order-checkout').on('click', checkout);
-  $('#continue-shopping').on('click', updateAndClose);
 }
 
 var multiSelectCheckboxes = function() {
@@ -29,7 +28,6 @@ var multiSelectCheckboxes = function() {
 }
 
 var redirectCheckoutUrl = function() {
-  updateProductQuantity();
   window.document.location = $(this).data('url');
 }
 
@@ -73,8 +71,7 @@ var deleteProduct = function(event){
   event.preventDefault();
   event.stopPropagation();
   var button_id = $(this).attr('id');
-
-  var id = button_id.slice(7);
+  var id = button_id.slice(6);
     $.ajax({url: "/carts/" + id , 
          type: 'DELETE',
          dataType: 'json',
@@ -88,11 +85,6 @@ var changeTotalPrice = function(response){
   var text = parseFloat(response.cart_total).toFixed(2)
   $('#totalCartPrice').append(text)
   $('.badge').empty().append(response.cart.length);
-}
-
-var updateAndClose = function(event) {
-  updateProductQuantity();
-  $('#cart-modal').modal('toggle');
 }
 
 var updateProductQuantity = function(event){
@@ -137,7 +129,7 @@ var buildRow = function(product) {
   var $qty = $('<input class="pull-right form-control order-qty" type="number" name="quantity_' + product.id + '" value="' + product.cart_quantity + '" min="0" max="' + product.quantity + '"/>')
   $row.append(buildTd($qty));
 
-  var $delete = $('<a class="order-delete"><i class="glyphicon glyphicon-trash" id="delete_' + product.id + '"></i></a>')
+  var $delete = $('<a class="order-delete"><i class="glyphicon glyphicon-trash" id="trash_' + product.id + '"></i></a>')
   $row.append(buildTd($delete, 'text-right'))
 
   var $update = $('<a class="order-update"><i class="glyphicon glyphicon-refresh" id="update_' + product.id + '"></i></a>')

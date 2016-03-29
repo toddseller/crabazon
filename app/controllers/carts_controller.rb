@@ -3,11 +3,15 @@ class CartsController < ApplicationController
   def remove
     product_data = session[:cart]
     product_id = params[:product_id]
-    session[:cart].delete(product_id)
-
+    test = session[:cart].delete(product_id)
+    p session[:cart]
+    p '-' * 25
+    p product_data
     @cart = build_cart(product_data)
     @cart_total = calculate_cart(product_data)
     response = { cart: @cart, cart_total: @cart_total}
+    p '*' * 25
+    p @cart_total
     if request.xhr?
       respond_to do |format|
         format.json { render json: response}

@@ -78,5 +78,5 @@
                     %th.text-right Total
                 %tbody
               .modal-footer
-                %button#continue-shopping.btn.btn-default Continue Shopping
+                %button.btn.btn-default{'aria-label' => 'Close', 'data-dismiss' => 'modal', type: 'button'} Continue Shopping
                 = link_to 'Checkout Now', new_order_path, class: 'btn btn-primary'
