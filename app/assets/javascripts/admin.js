@@ -11,8 +11,7 @@ var bindListeners = function() {
   $('.glyphicon-trash').on('click', deleteProduct);
   $('.glyphicon-refresh').on('click', updateProductQuantity);
   $('#order-checkout').on('click', checkout);
-
-
+  $('#continue-shopping').on('click', updateAndClose);
 }
 
 var multiSelectCheckboxes = function() {
@@ -30,6 +29,7 @@ var multiSelectCheckboxes = function() {
 }
 
 var redirectCheckoutUrl = function() {
+  updateProductQuantity();
   window.document.location = $(this).data('url');
 }
 
@@ -88,6 +88,11 @@ var changeTotalPrice = function(response){
   var text = parseFloat(response.cart_total).toFixed(2)
   $('#totalCartPrice').append(text)
   $('.badge').empty().append(response.cart.length);
+}
+
+var updateAndClose = function(event) {
+  updateProductQuantity();
+  $('#cart-modal').modal('toggle');
 }
 
 var updateProductQuantity = function(event){
