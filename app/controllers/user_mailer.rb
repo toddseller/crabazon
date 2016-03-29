@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "crabazon.com"
+  default from: "crabazononline@gmail.com"
   layout 'mailer'
 
   def welcome_email(user)
