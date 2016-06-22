@@ -17,11 +17,11 @@ class CartsController < ApplicationController
         format.json { render json: response}
       end
     else
-      redirect_to '/'
+      redirect_to '/'A
     end
   end
 
-  #Index shows all cart 
+  #Index shows all cart
   def show
       # @products = cart_session.cart_contents
   end
@@ -29,7 +29,7 @@ class CartsController < ApplicationController
   #Add
   def add
     product_id = params[:product_id]
-    if !session[:cart] 
+    if !session[:cart]
       session[:cart] = {}
     end
     product_data = session[:cart]
@@ -55,17 +55,17 @@ class CartsController < ApplicationController
     p product_id
     p session[:cart][product_id].to_i
     quantity_left = Product.find(product_id).quantity - session[:cart][product_id].to_i
-  
+
   end
 
   def update_cart
-    #loop through cart by index and update with searalized numbers 
+    #loop through cart by index and update with searalized numbers
     product_id = params[:id]
     product_quantities  = params[:product_quantities]
     product_data = session[:cart]
     p "*" * 25
     test = product_data.select { |k,v| k == product_id }
-  
+
     session[:cart][product_id] = product_quantities.to_i
     @cart = build_cart(test)
     @cart_total = calculate_cart(product_data)
@@ -102,7 +102,7 @@ class CartsController < ApplicationController
     session[:cart_total] = cart_total
     return cart_total
 
-  end 
+  end
 
 end
 
