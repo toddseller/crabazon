@@ -16,7 +16,7 @@
 * Client can edit items. 
   
 ### Live Heroku Site Link
-[Amacrabz](https://amacrabz.herokuapp.com)
+[Crabazon](https://crabazon.herokuapp.com)
 
 ### Schema Design for Online Shop
 ![Alt text](online-shop-schema.png)
