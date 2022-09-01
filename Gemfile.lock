@@ -1,8 +1,8 @@
 GIT
-  remote: git://github.com/ifad/data-confirm-modal.git
-  revision: a2018ab8893cdeeeffaae407368ed1a20ea72b30
+  remote: https://github.com/ifad/data-confirm-modal.git
+  revision: 404119ad5bf7754c31af41e35935e365c69dcd92
   specs:
-    data-confirm-modal (1.1.0)
+    data-confirm-modal (1.6.3)
       railties (>= 3.0)
 
 GEM
@@ -201,9 +201,9 @@ GEM
       eventmachine (~> 1.0, >= 1.0.4)
       rack (~> 1.0)
     thor (0.19.1)
-    thread_safe (0.3.5)
+    thread_safe (0.3.6)
     tilt (2.0.2)
-    tzinfo (1.2.2)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
     uglifier (3.0.0)
       execjs (>= 0.3.0, < 3)
