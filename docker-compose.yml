@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  web:
+    env_file:
+      - .env
+    build:
+      context: .
+      args:
+        - DATABASE_URL=$DATABASE_URL
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 5666 -b '0.0.0.0'"
+    volumes:
+      - .:/Rails-Docker
+    restart: unless-stopped
+    ports:
+      - "5666:5666"
