@@ -6,6 +6,7 @@
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
     = csrf_meta_tags
+    = favicon_link_tag 'favicon.ico'
   %nav.navbar.navbar-default.navbar-fixed-top
     .container-fluid
       .navbar-header
@@ -14,12 +15,12 @@
           %span.icon-bar
           %span.icon-bar
           %span.icon-bar
-        = link_to image_tag('crabazon.svg'), index_path, class: 'navbar-brand'
+        = link_to image_tag('crabazon-4c73156e176440b5cb7f7b9150a45b358a1a807184d966465581d0fc75bebcd3.svg'), index_path, class: 'navbar-brand'
       - if user_signed_in?
         .navbar-brand.header-cart
           = link_to new_order_path do
             %span.badge= @cart_total
-            %img{src: '/assets/cart-5504f46843ad482016e59a4616ea9654ed1cf62da97bbab57bfac4ae1aa9f660.svg'}
+            %img{src: '/assets/cart-4fe894055b992b22b293636d2bbc93e993d110133d76a1540ebdce958de25e31.svg'}
         %ul.nav.navbar-nav.user
           %li.dropdown
             %a.dropdown-toggle{"data-target" => "#", "data-toggle" => "dropdown", :href => "#", :role => "button"}
@@ -62,7 +63,7 @@
               %span{"aria-hidden" => "true"} &times;
             %h2.modal-title.text-center
               Your 
-              %img.modal-header-image{:alt => 'Macrabz Emporium', :src => '/assets/crabazon-8628bd93b3c6a1e22a76adc9b845ffc031364c942f3c059839c9484f94ef3eac.svg'}
+              %img.modal-header-image{:alt => 'Macrabz Emporium', :src => '/assets/crabazon-4c73156e176440b5cb7f7b9150a45b358a1a807184d966465581d0fc75bebcd3.svg'}
               Cart
           .modal-body
             %form

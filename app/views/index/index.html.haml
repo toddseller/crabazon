@@ -1,7 +1,7 @@
 .container
   .row
     .col-sm-12
-      %img.macrabz.center-block{:alt => 'Macrabz Emporium', :src => '/assets/crabazon-8628bd93b3c6a1e22a76adc9b845ffc031364c942f3c059839c9484f94ef3eac.svg'}
+      %img.macrabz.center-block{:alt => 'Crabazon', :src => '/assets/crabazon-4c73156e176440b5cb7f7b9150a45b358a1a807184d966465581d0fc75bebcd3.svg'}
       %h1.text-center.index-header We have more than crabs!
     .col-sm-12
       - @products.each do |product|
@@ -16,7 +16,10 @@
               .index-description
                 %p= product.description
             .product-button
-              - if product.quantity == 0
-                %button.btn.btn-primary-2.btn-lg.center-block.add-product-button{:id => "add_#{product.id}", :disabled => ""} Add to Cart
+              - if user_signed_in?
+                - if product.quantity == 0 || session[:cart][product.id.to_s].to_i >= product.quantity.to_i
+                  %button.btn.btn-primary-2.btn-lg.center-block.add-product-button{:id => "add_#{product.id}", :disabled => ""} Add to Cart
+                - else
+                  %button.btn.btn-primary-2.btn-lg.center-block.add-product-button{:id => "add_#{product.id}", 'data-toggle' => 'modal', 'data-target' => '#cart'} Add to Cart
               - else
-                %button.btn.btn-primary-2.btn-lg.center-block.add-product-button{:id => "add_#{product.id}", 'data-toggle' => 'modal', 'data-target' => '#cart-modal'} Add to Cart
+                = link_to 'Add to Cart', new_user_session_path, class:'btn btn-primary-2 btn-lg center-block'

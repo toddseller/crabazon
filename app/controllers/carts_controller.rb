@@ -10,14 +10,12 @@ class CartsController < ApplicationController
     @cart = build_cart(product_data)
     @cart_total = calculate_cart(product_data)
     response = { cart: @cart, cart_total: @cart_total}
-    p '*' * 25
-    p @cart_total
     if request.xhr?
       respond_to do |format|
         format.json { render json: response}
       end
     else
-      redirect_to '/'A
+      redirect_to '/'
     end
   end
 
@@ -38,8 +36,6 @@ class CartsController < ApplicationController
     @cart = build_cart(product_data)
     @cart_total = calculate_cart(product_data)
     @quantity_available = calculate_quantity_available(product_id)
-    p "%%%%%%%%%%%%%%%%"
-    p @quantity_available
     response = { cart: @cart, cart_total: @cart_total, quantity_available: @quantity_available}
     if request.xhr?
       respond_to do |format|
@@ -51,9 +47,6 @@ class CartsController < ApplicationController
   end
 
   def calculate_quantity_available(product_id)
-    p Product.find(product_id).quantity
-    p product_id
-    p session[:cart][product_id].to_i
     quantity_left = Product.find(product_id).quantity - session[:cart][product_id].to_i
 
   end
@@ -63,7 +56,6 @@ class CartsController < ApplicationController
     product_id = params[:id]
     product_quantities  = params[:product_quantities]
     product_data = session[:cart]
-    p "*" * 25
     test = product_data.select { |k,v| k == product_id }
 
     session[:cart][product_id] = product_quantities.to_i
