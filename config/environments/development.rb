@@ -41,11 +41,10 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:              'mail.toddseller.com',
-    port:                 465,
-    domain:               'toddseller.com',
-    user_name:            'crabazon@toddseller.com',
-    password:             'UcP2q!W9._3Mo3Dztq.AGv*7zxnJ-RVFf_f*',
+    address:              ENV['MAIL_HOST'],
+    port:                 ENV['PORT'],
+    user_name:            ENV['EMAIL_ADDRESS'],
+    password:             ENV['EMAIL_SECRET'],
     authentication:       :login,
     tls:                  true
   }
