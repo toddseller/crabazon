@@ -33,7 +33,7 @@ Each test run SHALL use the Ruby version the production image runs and the Postg
 
 #### Scenario: Versions in a test run
 - **WHEN** a test run starts
-- **THEN** it runs Ruby 2.6.7 against PostgreSQL 18
+- **THEN** it runs Ruby 3.4.12 against PostgreSQL 18
 
 ### Requirement: Tests never touch a non-test database
 The suite SHALL refuse to start when the database it would connect to is not a test database, whatever `DATABASE_URL` or `.env` configures, so a test run can never truncate production data.
