@@ -7,7 +7,7 @@ Bundler.require(*Rails.groups)
 module Shoppe
   class Application < Rails::Application
     config.generators.helper = false
-    config.active_record.legacy_connection_handling = false
+    config.active_support.cache_format_version = 7.1
     # config.active_record.raise_in_transactional_callbacks = true
   end
 end

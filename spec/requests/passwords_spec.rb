@@ -41,4 +41,9 @@ RSpec.describe 'Password reset', type: :request do
     sign_in_as('newpass1')
     expect(response).to redirect_to('/index')
   end
+
+  it 'shows an error for an unknown email' do
+    expect { post '/users/password', params: { user: { email: 'nobody@example.com' } } }.not_to change { deliveries.size }
+    expect(response.body).to include('Email not found')
+  end
 end
