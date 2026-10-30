@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 7.1.6'
+gem 'rails', '~> 7.2.3'
 gem 'pg'
 gem 'faker'
 gem 'json'
@@ -27,8 +27,11 @@ gem 'rails_12factor'
 group :development, :test do
   gem 'dotenv-rails'
   gem 'pry-rails'
-  gem 'binding_of_caller'
-  gem 'better_errors'
   gem 'rspec-rails'
   gem 'database_cleaner'
+end
+
+group :development do
+  gem 'binding_of_caller'
+  gem 'better_errors'
 end
