@@ -9,8 +9,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    # Production's image: Ruby 2.6.7 on Debian 10
-    container: ruby:2.6.7
+    # Production's Ruby
+    container: ruby:3.4.12
     services:
       postgres:
         image: postgres:18
@@ -22,10 +22,8 @@ jobs:
       DATABASE_URL: postgres://postgres:postgres@postgres/shoppe_test
     steps:
       - uses: actions/checkout@v5
-      # Debian 10's repositories moved to the archive; Rails needs Node to boot
-      - run: |
-          echo "deb http://archive.debian.org/debian buster main" > /etc/apt/sources.list
-          apt-get update && apt-get install -y nodejs
-      - run: gem install bundler -v 2.2.19 && bundle install
+      # Rails needs a JavaScript runtime to boot
+      - run: apt-get update && apt-get install -y nodejs
+      - run: bundle install
       - run: bin/rails db:create db:schema:load
       - run: bundle exec rspec

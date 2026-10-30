@@ -4,6 +4,11 @@ gem 'rails'
 gem 'pg'
 gem 'faker'
 gem 'json'
+# Ruby 3.4 no longer ships these as default gems, and Rails 6.1 requires them
+gem 'base64'
+gem 'bigdecimal'
+gem 'mutex_m'
+gem 'drb'
 
 # gem 'rake'
 
@@ -26,5 +31,4 @@ group :development, :test do
   gem 'better_errors'
   gem 'rspec-rails'
   gem 'database_cleaner'
-  gem 'factory_girl_rails'
 end
