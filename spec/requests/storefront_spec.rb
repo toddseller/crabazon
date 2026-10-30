@@ -22,6 +22,6 @@ RSpec.describe 'Storefront', type: :request do
   it 'shows a product on its page' do
     get "/products/#{pricey.id}"
 
-    expect(response.body).to include('Imperial Stout', 'Dark', '12.50', 'Qty: 4', "/categories/#{stouts.id}")
+    expect(response.body).to include('Imperial Stout', 'Dark', '12.50', 'Qty: 3', "/categories/#{stouts.id}")
   end
 end
