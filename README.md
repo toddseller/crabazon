@@ -36,3 +36,23 @@ Add Product Page
 
 ![Alt text](checkout.png)
 Checkout Page
+
+### Deployment
+
+The site runs on the app host from a checkout of `master` in `~/crabazon`, against PostgreSQL 18. To deploy:
+
+```sh
+git pull
+docker compose up -d web
+```
+
+Settings live in `.env`. To keep the database password out of it, set `PGPASS_FILE` to a libpq password file on the host and leave the password out of `DATABASE_URL`:
+
+```sh
+PGPASS_FILE=/home/<user>/.pgpass
+DATABASE_URL=postgres://crabazon_app@<new-db-host>:5432/crabazon
+```
+
+Compose mounts that file read-only into `web`. Without `PGPASS_FILE`, the password in `DATABASE_URL` works as before.
+
+Don't rebuild the image on the app host (`--build` or `docker compose build`): it is based on Debian 10, whose package repositories are archived, so the build is likely to fail. The Ruby and Rails upgrade replaces it.
