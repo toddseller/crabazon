@@ -71,17 +71,15 @@ The tests run in Docker on the same Ruby as production, against a throwaway Post
 ```sh
 docker network create crabazon-test
 docker run -d --name crabazon-test-db --network crabazon-test -e POSTGRES_PASSWORD=postgres postgres:18
-docker run --rm --platform linux/amd64 --network crabazon-test \
+docker run --rm --network crabazon-test \
   -v "$PWD":/app -w /app -v crabazon-test-gems:/usr/local/bundle \
   -e RAILS_ENV=test -e RACK_ENV=test -e DATABASE_URL=postgres://postgres:postgres@crabazon-test-db/shoppe_test \
-  ruby:2.6.7 bash -c '
-    echo "deb http://archive.debian.org/debian buster main" > /etc/apt/sources.list &&
-    apt-get update && apt-get install -y nodejs &&
-    gem install bundler -v 2.2.19 && bundle install &&
+  ruby:3.4.12 bash -c '
+    apt-get update && apt-get install -y nodejs && bundle install &&
     bin/rails db:create db:schema:load && bundle exec rspec'
 ```
 
-Run the last command again after a change; the `crabazon-test-gems` volume keeps the gems between runs. `linux/amd64` is needed on Apple silicon, because Nokogiri's arm64 build needs a newer glibc than Debian 10 has, and Rails needs Node to boot. Clean up with:
+Run the last command again after a change; the `crabazon-test-gems` volume keeps the gems between runs. Node is installed because Rails needs a JavaScript runtime to boot. Clean up with:
 
 ```sh
 docker rm -f crabazon-test-db && docker network rm crabazon-test && docker volume rm crabazon-test-gems
