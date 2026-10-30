@@ -3,11 +3,11 @@ FROM ruby:2.6.7
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-RUN apt-get update && apt-get install -y --force-yes nodejs default-mysql-client postgresql-client sqlite3 vim --no-install-recommends && rm -rf /var/lib/apt/lists/*
+# Debian 10's repositories moved to the archive
+RUN echo "deb http://archive.debian.org/debian buster main" > /etc/apt/sources.list && apt-get update && apt-get install -y --force-yes nodejs default-mysql-client postgresql-client sqlite3 vim --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 ARG DATABASE_URL
 
-ADD . /Rails-Docker
 COPY Gemfile /usr/src/app/
 COPY Gemfile.lock /usr/src/app/
 

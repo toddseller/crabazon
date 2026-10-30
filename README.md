@@ -39,10 +39,19 @@ Checkout Page
 
 ### Deployment
 
-The site runs on the app host from a checkout of `master` in `~/crabazon`, against PostgreSQL 18. To deploy:
+The site runs on the app host from a checkout of `master` in `~/crabazon`, against PostgreSQL 18. The `web` container runs the code copied into its image at build time, not the checkout, so every code change needs a build. To deploy:
 
 ```sh
 git pull
+docker tag crabazon-web:latest crabazon-web:previous
+docker compose build web
+docker compose up -d web
+```
+
+To roll back to the image that ran before:
+
+```sh
+docker tag crabazon-web:previous crabazon-web:latest
 docker compose up -d web
 ```
 
@@ -54,8 +63,6 @@ DATABASE_URL=postgres://crabazon_app@<new-db-host>:5432/crabazon
 ```
 
 Compose mounts that file read-only into `web`. Without `PGPASS_FILE`, the password in `DATABASE_URL` works as before.
-
-Don't rebuild the image on the app host (`--build` or `docker compose build`): it is based on Debian 10, whose package repositories are archived, so the build is likely to fail. The Ruby and Rails upgrade replaces it.
 
 ### Running the tests
 
