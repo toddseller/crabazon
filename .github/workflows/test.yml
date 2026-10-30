@@ -1,0 +1,31 @@
+name: test
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    # Production's image: Ruby 2.6.7 on Debian 10
+    container: ruby:2.6.7
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: postgres://postgres:postgres@postgres/shoppe_test
+    steps:
+      - uses: actions/checkout@v5
+      # Debian 10's repositories moved to the archive; Rails needs Node to boot
+      - run: |
+          echo "deb http://archive.debian.org/debian buster main" > /etc/apt/sources.list
+          apt-get update && apt-get install -y nodejs
+      - run: gem install bundler -v 2.2.19 && bundle install
+      - run: bin/rails db:create db:schema:load
+      - run: bundle exec rspec
