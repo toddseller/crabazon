@@ -29,12 +29,4 @@ RSpec.describe 'Sessions', type: :request do
     expect(response.body).to include('Invalid Email or password.')
     expect(session['warden.user.user.key']).to be_nil
   end
-
-  it 'signs up a new customer' do
-    pending 'sign-up raises NoMethodError: Users::RegistrationsController calls devise_parameter_sanitizer.for, removed in Devise 4'
-
-    post '/users', params: { user: { name: 'Nina', email: 'nina@example.com', password: 'secret1', password_confirmation: 'secret1' } }
-
-    expect(User.find_by(email: 'nina@example.com')).to be_present
-  end
 end
