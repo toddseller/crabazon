@@ -16,6 +16,11 @@ RSpec.describe 'Password reset', type: :request do
 
     expect { post '/users/password', params: { user: { email: 'cara@example.com' } } }.to change { deliveries.size }.by(1)
     expect(deliveries.last).to have_attributes(to: ['cara@example.com'], from: ['crabazon@toddseller.com'])
+    expect(response).to redirect_to('/users/password/sent')
+    follow_redirect!
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include('cara@example.com')
+    expect(response.body).not_to include('You will receive an email')
 
     link = CGI.unescapeHTML(deliveries.last.body.encoded[/href="([^"]+)"/, 1])
     expect(link).to start_with('http://www.example.com/users/password/edit?reset_password_token=')

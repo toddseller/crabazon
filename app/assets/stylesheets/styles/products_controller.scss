@@ -118,6 +118,15 @@ body {
   border-color: #e58c33;
 }
 
+// Rails disables submit buttons while their form sends; Bootstrap paints disabled primaries blue.
+.btn-primary[disabled],
+.btn-primary[disabled]:hover,
+.btn-primary[disabled]:focus,
+.btn-primary[disabled]:active {
+  background-color: #e58c33;
+  border-color: #f19833;
+}
+
 .table > tbody > tr > td {
   height: 60px;
   vertical-align: middle;

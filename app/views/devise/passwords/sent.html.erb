@@ -1,0 +1,4 @@
+<%= render layout: 'devise/shared/card', locals: { title: 'Check your email' } do %>
+  <p>We've sent a link to reset your password to <strong><%= @email || 'your email address' %></strong>.</p>
+  <p>The link works for 6 hours. If it doesn't arrive in a few minutes, check your spam folder.</p>
+<% end %>
