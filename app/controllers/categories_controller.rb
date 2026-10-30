@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+  before_action :authenticate_admin!, except: [:index, :show]
 
   def index
     @categories = Category.sort_by_name

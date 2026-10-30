@@ -15,6 +15,11 @@ class ApplicationController < ActionController::Base
   end
 
   private
+  def authenticate_admin!
+    authenticate_user!
+    redirect_to index_path, alert: 'That page is for admins.' unless current_user.role == 'admin'
+  end
+
   def set_categories
     @categories = Category.sort_by_name
   end
