@@ -11,7 +11,8 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @order = Order.find(params[:id])
+    @order = current_user.orders.find_by(id: params[:id])
+    redirect_to orders_path, alert: 'Order not found.' unless @order
   end
 
   def create

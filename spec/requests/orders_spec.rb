@@ -68,6 +68,34 @@ RSpec.describe 'Orders', type: :request do
     expect(response.body).to include("Order Number #{mine.id}")
     expect(response.body).not_to include("Order Number #{theirs.id}")
   end
+
+  it 'shows the customer their own order' do
+    mine = Order.create!(user: cara, total: 9, order_date: Time.now)
+    OrdersProduct.create!(order: mine, product: ipa, quantity: 2)
+
+    get "/orders/#{mine.id}"
+
+    expect(response.body).to include('Stone IPA', '$9.00')
+  end
+
+  it "keeps another customer's order hidden" do
+    porter = Product.create!(name: 'Secret Porter', description: 'Dark', price: 6, quantity: 3, product_image: 'https://example.com/porter.png')
+    theirs = Order.create!(user: User.create!(name: 'Otto', email: 'otto@example.com', password: 'secret1'), total: 6, order_date: Time.now)
+    OrdersProduct.create!(order: theirs, product: porter, quantity: 1)
+
+    get "/orders/#{theirs.id}"
+
+    expect(response).to redirect_to('/orders')
+    expect(flash[:alert]).to eq('Order not found.')
+    expect(response.body).not_to include('Secret Porter')
+  end
+
+  it 'answers a missing order the same way' do
+    get '/orders/999999'
+
+    expect(response).to redirect_to('/orders')
+    expect(flash[:alert]).to eq('Order not found.')
+  end
 end
 
 RSpec.describe 'Checkout without signing in', type: :request do
