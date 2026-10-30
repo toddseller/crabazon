@@ -32,12 +32,19 @@ An account created through sign-up SHALL be a customer account, whatever extra f
 - **THEN** the account is created without the admin role, and its user is refused the admin page
 
 ### Requirement: Customers can reset a forgotten password
-A visitor who asks for a password reset with the email of an account SHALL be sent one email, from the shop's sender, with a link to the shop's own address that lets them choose a new password. After choosing one through that link, they SHALL be signed in with an empty cart and land on the index page (an admin on the admin page), which SHALL show normally, and SHALL be able to sign in with the new password and no longer with the old one.
+A visitor who asks for a password reset with the email of an account SHALL be sent one email, from the shop's sender, with a link to the shop's own address that lets them choose a new password, and SHALL then see a page confirming that the link was sent to that address.
 
-#### Scenario: Reset through the emailed link
-- **WHEN** a visitor asks for a reset with an account's email, opens the emailed link, and submits a new, confirmed password from that page
-- **THEN** one email went to that address from `crabazon@toddseller.com`, its link points at the shop's address, the visitor lands signed in on the index page, which shows with an empty cart, and the account signs in with the new password but not the old one
+#### Scenario: Reset email sent
+- **WHEN** a visitor asks for a reset with an account's email
+- **THEN** one email goes to that address from `crabazon@toddseller.com`, its link points at the shop's address, and the visitor lands on a page that says the link was sent to that address, not on the sign-in page
 
 #### Scenario: Links point at the public shop
 - **WHEN** the shop runs in production and sends a reset email
 - **THEN** the email's link starts with `https://crabazon.us/`
+
+### Requirement: A reset signs the customer in with the new password
+After choosing a new password through the emailed link, the customer SHALL be signed in with an empty cart and land on the index page (an admin on the admin page), which SHALL show normally. The account SHALL then sign in with the new password and no longer with the old one.
+
+#### Scenario: New password set through the link
+- **WHEN** a visitor opens the emailed link and submits a new, confirmed password from that page
+- **THEN** they land signed in on the index page, which shows with an empty cart, and the account signs in with the new password but not the old one
