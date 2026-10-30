@@ -20,6 +20,7 @@ RSpec.describe 'Orders', type: :request do
     expect(order.orders_product.pluck(:product_id, :quantity)).to contain_exactly([ipa.id, 2], [lager.id, 1])
     expect([ipa.reload.quantity, lager.reload.quantity]).to eq([3, 6])
     expect(ActionMailer::Base.deliveries.map(&:to)).to eq([['cara@example.com']])
+    expect(ActionMailer::Base.deliveries.last.from).to eq(['crabazon@toddseller.com'])
     expect(session[:cart]).to eq({})
     expect(response).to redirect_to("/orders/#{order.id}")
   end

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails'
+gem 'rails', '~> 7.0.10'
 gem 'pg'
 gem 'faker'
 gem 'json'
