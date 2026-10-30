@@ -23,7 +23,7 @@
                 %td= product.name
                 %td.text-center= number_with_precision(product.price, precision: 2)
                 %td
-                  %input.form-control.order-qty.pull-right{:name => "quantity_#{product.id}", :type => "number", :value => session[:cart]["#{product.id}"], :min => 0, :max => product.quantity}
+                  %input.form-control.order-qty.pull-right{:name => "quantity_#{product.id}", :type => "number", :value => session[:cart]["#{product.id}"], :min => 1, :max => product.quantity}
                 %td.text-right
                   %a.order-delete{:href => '#'}
                     %i.glyphicon.glyphicon-trash{:id => "trash_#{product.id}"}

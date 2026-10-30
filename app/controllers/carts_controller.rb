@@ -27,11 +27,12 @@ class CartsController < ApplicationController
   #Add
   def add
     product_id = params[:product_id]
-    if !session[:cart]
-      session[:cart] = {}
-    end
+    session[:cart] ||= {}
     product_data = session[:cart]
-    product_data[product_id] ? product_data[product_id] += 1 : product_data[product_id] = 1
+    quantity = product_data[product_id].to_i + 1
+    product = Product.find(product_id)
+    return refuse_quantity(product, '/') unless quantity_in_stock?(product, quantity)
+    product_data[product_id] = quantity
 
     @cart = build_cart(product_data)
     @cart_total = calculate_cart(product_data)
@@ -52,14 +53,13 @@ class CartsController < ApplicationController
   end
 
   def update_cart
-    #loop through cart by index and update with searalized numbers
     product_id = params[:id]
-    product_quantities  = params[:product_quantities]
+    product = Product.find(product_id)
+    quantity = Integer(params[:product_quantities].to_s, 10, exception: false)
+    return refuse_quantity(product, '/orders/new') unless quantity_in_stock?(product, quantity)
     product_data = session[:cart]
-    test = product_data.select { |k,v| k == product_id }
-
-    session[:cart][product_id] = product_quantities.to_i
-    @cart = build_cart(test)
+    product_data[product_id] = quantity
+    @cart = build_cart(product_data.slice(product_id))
     @cart_total = calculate_cart(product_data)
     response = { cart: @cart, cart_total: @cart_total }
     if request.xhr?
@@ -73,6 +73,14 @@ class CartsController < ApplicationController
 
 
   private
+
+  def quantity_in_stock?(product, quantity)
+    quantity.is_a?(Integer) && quantity.between?(1, product.quantity)
+  end
+
+  def refuse_quantity(product, path)
+    refuse("#{product.name}: choose a quantity from 1 to #{product.quantity}.", path)
+  end
 
   def build_item(product)
     cart = Product.find(product)
