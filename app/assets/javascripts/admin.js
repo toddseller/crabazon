@@ -54,7 +54,7 @@ var addProduct = function(event){
       $('.badge').empty().append(response.cart.length);
       $('#cart-modal').modal('show');
 
-    })
+    }).fail(reloadPage)
          //change the button if product is disabled
 }
 
@@ -97,6 +97,7 @@ var updateProductQuantity = function(event){
       type: 'POST',
       data: {id: id, product_quantities: value},
       dataType: 'json',
+      error: reloadPage,
       success: function(response) {
         var total = (response.cart[0].price * value).toFixed(2)
         var grandTotal = parseFloat(response.cart_total).toFixed(2)
@@ -126,7 +127,7 @@ var buildRow = function(product) {
   var price = parseFloat(product.price).toFixed(2);
   $row.append(buildTd(price, 'text-center').prepend('$'));
 
-  var $qty = $('<input class="pull-right form-control order-qty" type="number" name="quantity_' + product.id + '" value="' + product.cart_quantity + '" min="0" max="' + product.quantity + '"/>')
+  var $qty = $('<input class="pull-right form-control order-qty" type="number" name="quantity_' + product.id + '" value="' + product.cart_quantity + '" min="1" max="' + product.quantity + '"/>')
   $row.append(buildTd($qty));
 
   var $delete = $('<a class="order-delete"><i class="glyphicon glyphicon-trash" id="trash_' + product.id + '"></i></a>')
@@ -146,8 +147,14 @@ var checkout = function(event){
   // event.stopPropagation();
   $.ajax({url: "/orders", 
          type: 'POST',
-         success: displayOrder
+         success: displayOrder,
+         error: reloadPage
        })
+}
+
+// the server put its reason in the flash; a reload shows it and the real cart
+var reloadPage = function() {
+  window.location.reload();
 }
 
 var displayOrder = function(response) {

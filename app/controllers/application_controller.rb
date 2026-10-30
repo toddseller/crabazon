@@ -20,6 +20,15 @@ class ApplicationController < ActionController::Base
     redirect_to index_path, alert: 'That page is for admins.' unless current_user.role == 'admin'
   end
 
+  def refuse(message, path)
+    flash[:alert] = message
+    if request.xhr?
+      render json: { error: message }, status: :unprocessable_entity
+    else
+      redirect_to path
+    end
+  end
+
   def set_categories
     @categories = Category.sort_by_name
   end

@@ -24,4 +24,37 @@ RSpec.describe 'Cart', type: :request do
     delete "/carts/#{ipa.id}", xhr: true
     expect(response.parsed_body).to eq('cart' => [], 'cart_total' => 0)
   end
+
+  # as stored in the cookie: the total is a BigDecimal right after a request and a string once read back
+  def cart_state
+    JSON.parse([session[:cart], session[:cart_total]].to_json)
+  end
+
+  def expect_refused
+    expect(response).to have_http_status(:unprocessable_entity)
+    expect(response.parsed_body['error']).to be_present
+    expect(flash[:alert]).to be_present
+  end
+
+  it 'refuses to update to a quantity that is not 1 to the stock' do
+    post "/carts/#{ipa.id}", xhr: true
+    cart = cart_state
+
+    ['0', '-3', 'abc', '6'].each do |quantity|
+      post '/carts', params: { id: ipa.id, product_quantities: quantity }, xhr: true
+
+      expect_refused
+      expect(cart_state).to eq(cart), "quantity #{quantity}"
+    end
+  end
+
+  it 'refuses to add past the stock' do
+    5.times { post "/carts/#{ipa.id}", xhr: true }
+    cart = cart_state
+
+    post "/carts/#{ipa.id}", xhr: true
+
+    expect_refused
+    expect(cart_state).to eq(cart)
+  end
 end
