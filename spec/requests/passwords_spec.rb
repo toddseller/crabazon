@@ -9,6 +9,10 @@ RSpec.describe 'Password reset', type: :request do
 
   it 'emails a link that sets a new password' do
     User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1')
+    Product.create!(name: 'Stone IPA', description: 'Hoppy', price: 4.5, quantity: 5)
+
+    get '/users/password/new'
+    expect(response).to have_http_status(:ok)
 
     expect { post '/users/password', params: { user: { email: 'cara@example.com' } } }.to change { deliveries.size }.by(1)
     expect(deliveries.last).to have_attributes(to: ['cara@example.com'], from: ['crabazon@toddseller.com'])
@@ -19,7 +23,12 @@ RSpec.describe 'Password reset', type: :request do
     expect(response).to have_http_status(:ok)
 
     token = Rack::Utils.parse_query(URI(link).query)['reset_password_token']
-    put '/users/password', params: { user: { reset_password_token: token, password: 'newpass1', password_confirmation: 'newpass1' } }
+    put '/users/password', params: { user: { reset_password_token: token, password: 'newpass1', password_confirmation: 'newpass1' } },
+                           headers: { 'HTTP_REFERER' => link }
+    expect(response).to redirect_to('/index')
+    follow_redirect!
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include('Signed in as Cara', 'Stone IPA')
     delete '/users/sign_out'
 
     sign_in_as('secret1')

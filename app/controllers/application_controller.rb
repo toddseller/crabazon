@@ -6,12 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :cart
 
   def after_sign_in_path_for(resource)
-    sign_in_url = new_user_session_url
-    if request.referer == sign_in_url
-      super
-    else
-      stored_location_for(resource) || request.referer || root_path
-    end
+    resource.role == 'admin' ? admin_index_path : index_path
   end
 
   private
@@ -34,6 +29,7 @@ class ApplicationController < ActionController::Base
   end
 
   def cart
+    session[:cart] ||= {} if user_signed_in?
     @cart = session[:cart]
     @cart_total = @cart.count if session[:cart]
   end

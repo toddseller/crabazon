@@ -23,12 +23,4 @@ class Users::SessionsController < Devise::SessionsController
   def configure_sign_in_params
     devise_parameter_sanitizer.for(:sign_in, :role) << :attribute
   end
-
-  def after_sign_in_path_for(resource)
-    if current_user.role == 'admin'
-      admin_index_path
-    else
-      index_path
-    end
-  end
 end
