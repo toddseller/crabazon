@@ -10,7 +10,7 @@ RSpec.describe 'Registrations', type: :request do
     expect { post '/users', params: { user: sign_up } }.to change { deliveries.size }.by(1)
 
     expect(User.find_by(email: 'nina@example.com')).to have_attributes(name: 'Nina', role: nil)
-    expect(deliveries.last).to have_attributes(to: ['nina@example.com'], subject: 'Welcome to Crabazon')
+    expect(deliveries.last).to have_attributes(to: ['nina@example.com'], from: ['crabazon@toddseller.com'], subject: 'Welcome to Crabazon')
     expect(response).to redirect_to('/index')
 
     follow_redirect!
