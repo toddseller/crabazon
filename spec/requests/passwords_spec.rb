@@ -1,0 +1,30 @@
+require 'rails_helper'
+
+RSpec.describe 'Password reset', type: :request do
+  let(:deliveries) { ActionMailer::Base.deliveries }
+
+  def sign_in_as(password)
+    post '/users/sign_in', params: { user: { email: 'cara@example.com', password: password } }
+  end
+
+  it 'emails a link that sets a new password' do
+    User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1')
+
+    expect { post '/users/password', params: { user: { email: 'cara@example.com' } } }.to change { deliveries.size }.by(1)
+    expect(deliveries.last).to have_attributes(to: ['cara@example.com'], from: ['crabazon@toddseller.com'])
+
+    link = CGI.unescapeHTML(deliveries.last.body.encoded[/href="([^"]+)"/, 1])
+    expect(link).to start_with('http://www.example.com/users/password/edit?reset_password_token=')
+    get link
+    expect(response).to have_http_status(:ok)
+
+    token = Rack::Utils.parse_query(URI(link).query)['reset_password_token']
+    put '/users/password', params: { user: { reset_password_token: token, password: 'newpass1', password_confirmation: 'newpass1' } }
+    delete '/users/sign_out'
+
+    sign_in_as('secret1')
+    expect(session['warden.user.user.key']).to be_nil
+    sign_in_as('newpass1')
+    expect(response).to redirect_to('/index')
+  end
+end
