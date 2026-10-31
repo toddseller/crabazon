@@ -13,7 +13,7 @@ gem 'drb'
 # gem 'rake'
 
 gem 'uglifier'
-gem 'thin'
+gem 'puma'
 
 gem 'jquery-rails'
 gem 'haml-rails'
