@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   def refuse(message, path)
     flash[:alert] = message
     if request.xhr?
-      render json: { error: message }, status: :unprocessable_entity
+      render json: { error: message }, status: :unprocessable_content
     else
       redirect_to path
     end
