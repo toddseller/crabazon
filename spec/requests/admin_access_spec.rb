@@ -13,6 +13,7 @@ RSpec.describe 'Admin access', type: :request, aggregate_failures: true do
       [:get, "/products/#{ipa.id}/edit"],
       [:patch, "/products/#{ipa.id}", { product: product_params, category_ids: [stouts.id] }],
       [:delete, "/products/#{ipa.id}"],
+      [:get, '/categories'],
       [:get, '/categories/new'],
       [:post, '/categories', { category: { name: 'Hijacked' } }],
       [:get, "/categories/#{stouts.id}/edit"],

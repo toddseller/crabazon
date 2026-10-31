@@ -16,7 +16,7 @@
           .col-lg-8
             %p.text-center
               - @product.categories.each do |category|
-                = link_to category.name, "/categories/#{category.id}"
+                = link_to category.name, "/categories/#{category.id}", class: 'category-name'
         - if user_signed_in?
           - if @product.quantity == 0 || session[:cart][@product.id.to_s].to_i >= @product.quantity.to_i
             %button.btn.btn-primary.btn-lg.center-block.add-product-button.product-page-add{:id => "add_#{@product.id}", :disabled => ""} Add to Cart

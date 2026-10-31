@@ -39,7 +39,7 @@
               %li
                 = link_to 'All Products', index_path
                 - @categories.each do |category|
-                  = link_to category.name, "/categories/#{category.id}"
+                  = link_to category.name, "/categories/#{category.id}", class: 'category-name'
         %ul.nav.navbar-nav.navbar-right
           - if !user_signed_in?
             = link_to 'Login', new_user_session_path, class: 'btn btn-success navbar-btn btn-two'

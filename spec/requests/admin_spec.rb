@@ -66,13 +66,73 @@ RSpec.describe 'Admin', type: :request do
     expect(ipa.reload.categories).to eq([stouts])
   end
 
+  it 'links from /admin to the category list' do
+    get '/admin'
+
+    expect(Nokogiri::HTML(response.body).at('a[href="/categories"]')).not_to be_nil
+  end
+
+  it 'lists the categories with their edit and delete links' do
+    get '/categories'
+
+    page = Nokogiri::HTML(response.body)
+    expect(page.at('.category-name').text).to eq('stouts')
+    expect(page.at(%(a[href="/categories/#{stouts.id}/edit"]))).not_to be_nil
+    expect(page.at(%(a[href="/categories/#{stouts.id}"][data-method="delete"]))).not_to be_nil
+    expect(page.at('a[href="/categories/new"]')).not_to be_nil
+  end
+
+  it 'has a name field on the add and edit pages' do
+    ['/categories/new', "/categories/#{stouts.id}/edit"].each do |path|
+      get path
+
+      expect(Nokogiri::HTML(response.body).at('form input.category-name[name="category[name]"]')).not_to be_nil, path
+    end
+  end
+
   it 'creates and renames a category' do
     post '/categories', params: { category: { name: 'Lagers' } }
-    lagers = Category.find_by!(name: 'Lagers')
+    expect(response).to redirect_to('/categories')
+    follow_redirect!
+    expect(response.body).to include('Category successfully created!')
+    lagers = Category.find_by!(name: 'lagers')
 
     patch "/categories/#{lagers.id}", params: { category: { name: 'Pilsners' } }
 
-    expect(response).to redirect_to('/index')
-    expect(lagers.reload.name).to eq('Pilsners')
+    expect(response).to redirect_to('/categories')
+    expect(lagers.reload.name).to eq('pilsners')
+  end
+
+  it 'deletes a category and keeps its products' do
+    ipa.categories << stouts
+
+    delete "/categories/#{stouts.id}"
+
+    expect(response).to redirect_to('/categories')
+    follow_redirect!
+    expect(response.body).to include('Category successfully deleted!')
+    expect(Category.exists?(stouts.id)).to be(false)
+    expect(ipa.reload.categories).to be_empty
+  end
+
+  it 'refuses a blank name' do
+    expect { post '/categories', params: { category: { name: '  ' } } }.not_to change(Category, :count)
+    expect(response.body).to include('Opps! Something went wrong')
+  end
+
+  it 'refuses to rename a category to a name in use' do
+    lagers = Category.create!(name: 'Lagers')
+
+    patch "/categories/#{lagers.id}", params: { category: { name: 'Stouts' } }
+
+    expect(lagers.reload.name).to eq('lagers')
+    expect(response.body).to include('Opps! Something went wrong')
+  end
+
+  it 'stores names trimmed and in lowercase, and compares them that way' do
+    post '/categories', params: { category: { name: '  craft BEER ' } }
+    expect(Category.find_by(name: 'craft beer')).not_to be_nil
+
+    expect { post '/categories', params: { category: { name: 'STOUTS' } } }.not_to change(Category, :count)
   end
 end

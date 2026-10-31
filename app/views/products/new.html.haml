@@ -39,12 +39,12 @@
               .dropdown
                 %button#dropdownCategories.btn.btn-default.dropdown-toggle{ 'aria-expanded' => true, 'aria-haspopup' => true, 'data-toggle' => 'dropdown', type: 'button' }
                   %span.hida.caret
-                  %p.multiSel
+                  %p.multiSel.category-name
                 %ul.dropdown-menu{'aria-labelledby' => 'dropdownCategories'}
                   %ul.multiSelect{multiple: 'multiple'}
                     - @categories.each do |category|
                       %li
                         %input{type: 'checkbox', value: category.id, name: 'category_ids[]'}
-                        = category.name
+                        %span.category-name= category.name
           .col-md-12.update-button
             = f.submit 'Add Product', class: 'btn btn-primary btn-lg center-block'

@@ -1,0 +1,26 @@
+.container-fluid
+  .row
+    .col-sm-12
+      = link_to new_category_path, class: 'btn btn-success admin-buttons pull-right' do
+        %i.glyphicon.glyphicon-plus
+        %span Add Category
+.container
+  .row
+    .col-sm-12
+      = link_to image_tag('crabazon.svg'), index_path, class: 'macrabz-admin center-block'
+      %h1.text-center.index-header Your Categories!
+      - if flash[:success]
+        #flash.success.text-center
+          = flash[:success]
+      %table.table.table-striped
+        %thead
+          %tr
+            %th Category Name
+            %th
+            %th
+        %tbody
+          - @categories.each do |category|
+            %tr
+              %td.category-name= category.name
+              %td.text-right= link_to 'Edit', edit_category_path(category), class: 'btn btn-primary'
+              %td.text-left= link_to 'Delete', category_path(category), :method => 'delete', class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this category? Its products will stay, but leave this category.'}
