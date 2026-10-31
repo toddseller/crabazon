@@ -22,7 +22,6 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'sass-rails', '>= 3.2'
 gem 'data-confirm-modal', git: 'https://github.com/ifad/data-confirm-modal.git'
 gem 'devise'
-gem 'rails_12factor'
 
 group :development, :test do
   gem 'dotenv-rails'
