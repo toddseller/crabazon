@@ -6,7 +6,7 @@ RSpec.describe 'Sessions', type: :request do
   end
 
   it 'lands a customer on the index page' do
-    User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1')
+    User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1', confirmed_at: Time.current)
 
     sign_in_as('cara@example.com', 'secret1')
 
@@ -14,7 +14,7 @@ RSpec.describe 'Sessions', type: :request do
   end
 
   it 'lands an admin on /admin' do
-    User.create!(name: 'Ada', email: 'ada@example.com', password: 'secret1', role: 'admin')
+    User.create!(name: 'Ada', email: 'ada@example.com', password: 'secret1', role: 'admin', confirmed_at: Time.current)
 
     sign_in_as('ada@example.com', 'secret1')
 
@@ -22,7 +22,7 @@ RSpec.describe 'Sessions', type: :request do
   end
 
   it 'refuses a wrong password' do
-    User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1')
+    User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1', confirmed_at: Time.current)
 
     sign_in_as('cara@example.com', 'wrong-password')
 

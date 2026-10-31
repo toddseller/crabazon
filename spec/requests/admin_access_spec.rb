@@ -34,7 +34,7 @@ RSpec.describe 'Admin access', type: :request, aggregate_failures: true do
   end
 
   it 'sends customers home with a message and changes nothing' do
-    sign_in User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1')
+    sign_in User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1', confirmed_at: Time.current)
 
     guarded_requests.each do |verb, path, params|
       expect { send(verb, path, params: params) }.not_to change { catalog }, "#{verb.upcase} #{path}"

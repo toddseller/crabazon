@@ -18,9 +18,9 @@ en:
       unconfirmed: "You have to confirm your email address before continuing."
     mailer:
       confirmation_instructions:
-        subject: "Confirmation instructions"
+        subject: "Welcome to Crabazon"
       reset_password_instructions:
-        subject: "Reset password instructions"
+        subject: "Reset your Crabazon password"
       unlock_instructions:
         subject: "Unlock instructions"
       password_change:

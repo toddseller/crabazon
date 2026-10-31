@@ -1,5 +1,7 @@
-<p>Welcome <%= @email %>!</p>
-
-<p>You can confirm your account email through the link below:</p>
-
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+<% content_for :title, 'Welcome to Crabazon' %>
+<%= render 'shared/email_heading', text: 'Welcome to the family!' %>
+<p style="mso-table-lspace:0;mso-table-rspace:0; margin:0; padding:0 1px 15px"><span style="font-family: 'Roboto', Helvetica, Arial, sans-serif !important;">We are so happy you decided to join the crabazon family, and can't wait for you to experience the awesomeness that is crabazon. Whatever you are in the market for, we can get it! No ask is too big!</span></p>
+<p style="mso-table-lspace:0;mso-table-rspace:0; margin:0; padding:0 1px 15px"><span style="font-size: 24px; font-family: 'Roboto', Helvetica, Arial, sans-serif !important;">Want a baby? Done! We'll even gift wrap it for you!</span></p>
+<p style="mso-table-lspace:0;mso-table-rspace:0; margin:0; padding:0 1px 15px"><span style="font-size: 24px; font-family: 'Roboto', Helvetica, Arial, sans-serif !important;">Drugs? No problem, as long as we can party with you!</span></p>
+<p style="mso-table-lspace:0;mso-table-rspace:0; margin:0; padding:0 1px 15px"><span style="font-family: 'Roboto', Helvetica, Arial, sans-serif !important;">Confirm your email address to finish signing up.</span></p>
+<%= render 'shared/email_button', url: confirmation_url(@resource, confirmation_token: @token), label: 'Confirm your email' %>
