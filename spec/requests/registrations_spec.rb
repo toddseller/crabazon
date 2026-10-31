@@ -4,7 +4,7 @@ RSpec.describe 'Registrations', type: :request do
   let(:sign_up) { { name: 'Nina', email: 'nina@example.com', password: 'secret1', password_confirmation: 'secret1' } }
   let(:deliveries) { ActionMailer::Base.deliveries }
 
-  before { Product.create!(name: 'Stone IPA', description: 'Hoppy', price: 4.5, quantity: 5) }
+  before { Product.create!(name: 'Stone IPA', description: 'Hoppy', price: 4.5, quantity: 5, product_image: 'https://example.com/ipa.png') }
 
   it 'creates a signed-in customer with an empty cart and sends the welcome email' do
     expect { post '/users', params: { user: sign_up } }.to change { deliveries.size }.by(1)

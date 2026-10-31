@@ -21,7 +21,7 @@ class ProductsController < ApplicationController
       flash[:success] = "Product successfully created!"
       redirect_to "/admin"
     else
-      flash[:error] = "Opps! Something went wrong. Try again!"
+      flash.now[:error] = "Opps! Something went wrong. Try again!"
       render 'new'
     end
   end
@@ -45,6 +45,7 @@ class ProductsController < ApplicationController
       flash[:success] = "Product successfully updated!"
       redirect_to "/admin"
     else
+      flash.now[:error] = "Opps! Something went wrong. Try again!"
       render 'edit'
     end
   end

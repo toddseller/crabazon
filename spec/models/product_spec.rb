@@ -34,4 +34,12 @@ RSpec.describe Product, type: :model do
 		end
 	end
 
+	context "with an empty product image" do
+		it 'raises an error when attempting to save a product without an image' do
+			product = Product.create(name: "beer for all", description: "dkslfjkl", price: Faker::Commerce.price, quantity: 3, product_image: "")
+
+			expect(product.errors.full_messages).to include("Product image can't be blank")
+		end
+	end
+
 end

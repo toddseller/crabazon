@@ -101,7 +101,7 @@ end
 
 RSpec.describe 'Checkout without signing in', type: :request do
   it 'sends the visitor to sign in and changes nothing' do
-    ipa = Product.create!(name: 'Stone IPA', description: 'Hoppy', price: 4.5, quantity: 5)
+    ipa = Product.create!(name: 'Stone IPA', description: 'Hoppy', price: 4.5, quantity: 5, product_image: 'https://example.com/ipa.png')
     post "/carts/#{ipa.id}", xhr: true
 
     expect { post '/orders' }.not_to change { [Order.count, ipa.reload.quantity] }

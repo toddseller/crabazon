@@ -9,7 +9,7 @@ RSpec.describe 'Password reset', type: :request do
 
   it 'emails a link that sets a new password' do
     User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1')
-    Product.create!(name: 'Stone IPA', description: 'Hoppy', price: 4.5, quantity: 5)
+    Product.create!(name: 'Stone IPA', description: 'Hoppy', price: 4.5, quantity: 5, product_image: 'https://example.com/ipa.png')
 
     get '/users/password/new'
     expect(response).to have_http_status(:ok)

@@ -16,6 +16,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
   config.before(:suite) do
+    Rails.application.reload_routes_unless_loaded
     DatabaseCleaner.clean_with(:truncation)
   end
 
