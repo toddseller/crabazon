@@ -1,0 +1,4 @@
+<%= render layout: 'devise/shared/card', locals: { title: 'Check your email' } do %>
+  <p>We've sent an email to <strong><%= @email.presence || 'your email address' %></strong>. Open it to finish signing up.</p>
+  <p>If it doesn't arrive in a few minutes, check your spam folder.</p>
+<% end %>

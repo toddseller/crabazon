@@ -2,9 +2,11 @@ class UserMailer < ActionMailer::Base
   default from: "Crabazon <crabazon@toddseller.com>"
   layout 'mailer'
 
-  def welcome_email(user)
+  def sign_up_attempt(user)
     @user = user
-    mail(to: @user.email, subject: 'Welcome to Crabazon')
+    mail(to: @user.email, subject: 'Someone tried to sign up with your Crabazon address') do |format|
+      format.html { render layout: 'email' }
+    end
   end
 
   def order_email(order, user)

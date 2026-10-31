@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Orders', type: :request do
-  let!(:cara) { User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1') }
+  let!(:cara) { User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1', confirmed_at: Time.current) }
   let!(:ipa) { Product.create!(name: 'Stone IPA', description: 'Hoppy', price: 4.5, quantity: 5, product_image: 'https://example.com/ipa.png') }
   let!(:lager) { Product.create!(name: 'Session Lager', description: 'Light', price: 2.25, quantity: 7, product_image: 'https://example.com/lager.png') }
 
@@ -61,7 +61,7 @@ RSpec.describe 'Orders', type: :request do
 
   it "lists only the customer's own orders" do
     mine = Order.create!(user: cara, total: 9, order_date: Time.now)
-    other = User.create!(name: 'Otto', email: 'otto@example.com', password: 'secret1')
+    other = User.create!(name: 'Otto', email: 'otto@example.com', password: 'secret1', confirmed_at: Time.current)
     theirs = Order.create!(user: other, total: 4.5, order_date: Time.now)
 
     get '/orders'
@@ -81,7 +81,7 @@ RSpec.describe 'Orders', type: :request do
 
   it "keeps another customer's order hidden" do
     porter = Product.create!(name: 'Secret Porter', description: 'Dark', price: 6, quantity: 3, product_image: 'https://example.com/porter.png')
-    theirs = Order.create!(user: User.create!(name: 'Otto', email: 'otto@example.com', password: 'secret1'), total: 6, order_date: Time.now)
+    theirs = Order.create!(user: User.create!(name: 'Otto', email: 'otto@example.com', password: 'secret1', confirmed_at: Time.current), total: 6, order_date: Time.now)
     OrdersProduct.create!(order: theirs, product: porter, quantity: 1)
 
     get "/orders/#{theirs.id}"

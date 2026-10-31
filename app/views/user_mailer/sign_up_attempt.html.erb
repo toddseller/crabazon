@@ -1,0 +1,5 @@
+<% content_for :title, 'Someone tried to sign up with your Crabazon address' %>
+<%= render 'shared/email_heading', text: 'Someone tried to sign up with your address' %>
+<p style="mso-table-lspace:0;mso-table-rspace:0; margin:0; padding:0 1px 15px"><span style="font-family: 'Roboto', Helvetica, Arial, sans-serif !important;">Someone, maybe you, tried to sign up for Crabazon with <%= @user.email %>, but it already has an account.</span></p>
+<%= render 'shared/email_button', url: new_user_session_url, label: 'Sign in' %>
+<p style="mso-table-lspace:0;mso-table-rspace:0; margin:0; padding:0 1px 15px"><span style="font-family: 'Roboto', Helvetica, Arial, sans-serif !important;">Forgot your password? <%= link_to 'Reset it here', new_user_password_url, style: 'color:#e58c33;' %>. If this wasn't you, you can ignore this email; nothing has changed.</span></p>

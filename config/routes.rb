@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations', passwords: 'users/passwords' }
   devise_scope :user do
     get 'users/password/sent', to: 'users/passwords#sent', as: :user_password_sent
+    get 'users/sign_up/sent', to: 'users/registrations#sent', as: :user_sign_up_sent
   end
   resources :users
   resources :products

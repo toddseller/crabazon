@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe UserMailer, type: :mailer do
   it 'keeps a product image URL inside its src attribute' do
     url = 'https://example.com/a.png" onerror="x'
-    user = User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1')
+    user = User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1', confirmed_at: Time.current)
     product = Product.create!(name: 'Stone IPA', description: 'Hoppy', price: 4.5, quantity: 5, product_image: url)
     order = Order.create!(user: user, total: 4.5, order_date: Time.current)
     OrdersProduct.create!(order: order, product: product, quantity: 1)

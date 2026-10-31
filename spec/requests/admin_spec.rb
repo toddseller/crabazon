@@ -5,7 +5,7 @@ RSpec.describe 'Admin', type: :request do
   let!(:ipa) { Product.create!(name: 'Stone IPA', description: 'Hoppy', price: 4.5, quantity: 5, product_image: 'https://example.com/ipa.png') }
   let(:product_params) { { name: 'Imperial Stout', description: 'Dark', price: 12.5, quantity: 3, product_image: 'https://example.com/stout.png' } }
 
-  before { sign_in User.create!(name: 'Ada', email: 'ada@example.com', password: 'secret1', role: 'admin') }
+  before { sign_in User.create!(name: 'Ada', email: 'ada@example.com', password: 'secret1', role: 'admin', confirmed_at: Time.current) }
 
   it 'lists the products on /admin' do
     get '/admin'

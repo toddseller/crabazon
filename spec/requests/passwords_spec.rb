@@ -11,7 +11,7 @@ RSpec.describe 'Password reset', type: :request do
   end
 
   it 'emails a link that sets a new password' do
-    User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1')
+    User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1', confirmed_at: Time.current)
     Product.create!(name: 'Stone IPA', description: 'Hoppy', price: 4.5, quantity: 5, product_image: 'https://example.com/ipa.png')
 
     get '/users/password/new'
@@ -25,7 +25,7 @@ RSpec.describe 'Password reset', type: :request do
     expect(response.body).to include('If an account uses <strong>cara@example.com</strong>')
     expect(response.body).not_to include('You will receive an email', 'If your email address exists')
 
-    link = CGI.unescapeHTML(deliveries.last.body.encoded[/href="([^"]+)"/, 1])
+    link = CGI.unescapeHTML(deliveries.last.body.encoded[/href="([^"]*reset_password_token=[^"]*)"/, 1])
     expect(link).to start_with('http://www.example.com/users/password/edit?reset_password_token=')
     get link
     expect(response).to have_http_status(:ok)
@@ -54,14 +54,14 @@ RSpec.describe 'Password reset', type: :request do
 
   # Sending during the request would make a known address answer more slowly than an unknown one.
   it 'sends the reset email after answering' do
-    User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1')
+    User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1', confirmed_at: Time.current)
 
     expect { post '/users/password', params: { user: { email: 'cara@example.com' } } }.not_to change { deliveries.size }
     expect(enqueued_jobs.size).to eq(1)
   end
 
   it 'keeps the reset token out of the log' do
-    User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1')
+    User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1', confirmed_at: Time.current)
     log = StringIO.new
     original = ActiveJob::Base.logger
     ActiveJob::Base.logger = ActiveSupport::Logger.new(log)
@@ -85,8 +85,8 @@ RSpec.describe 'Password reset', type: :request do
   describe 'limit per address' do
     before do
       Users::PasswordsController::RESET_LIMIT_STORE.clear
-      User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1')
-      User.create!(name: 'Dan', email: 'dan@example.com', password: 'secret1')
+      User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1', confirmed_at: Time.current)
+      User.create!(name: 'Dan', email: 'dan@example.com', password: 'secret1', confirmed_at: Time.current)
     end
 
     def ask_for_reset(email)

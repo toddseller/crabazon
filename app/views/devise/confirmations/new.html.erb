@@ -1,0 +1,14 @@
+<%= render layout: 'devise/shared/card', locals: { title: "Didn't receive confirmation instructions?" } do %>
+  <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+    </div>
+
+    <div class="text-center">
+      <%= f.submit "Send me a new confirmation link", class: 'btn btn-primary', id: 'sign-in-button' %>
+    </div>
+  <% end %>
+<% end %>

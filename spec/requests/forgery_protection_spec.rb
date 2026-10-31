@@ -10,7 +10,7 @@ RSpec.describe 'Forgery protection', type: :request do
   end
 
   it 'refuses a sign-in without a token' do
-    User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1')
+    User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1', confirmed_at: Time.current)
 
     expect { post '/users/sign_in', params: { user: { email: 'cara@example.com', password: 'secret1' } } }
       .to raise_error(ActionController::InvalidAuthenticityToken)
@@ -19,7 +19,7 @@ RSpec.describe 'Forgery protection', type: :request do
   end
 
   it 'puts a token in the checkout form, for a submit without JavaScript' do
-    sign_in User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1')
+    sign_in User.create!(name: 'Cara', email: 'cara@example.com', password: 'secret1', confirmed_at: Time.current)
 
     get '/orders/new'
 
