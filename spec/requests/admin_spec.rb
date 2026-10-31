@@ -42,6 +42,30 @@ RSpec.describe 'Admin', type: :request do
     expect(response.body).to include('Opps! Something went wrong')
   end
 
+  it 'creates a product in no category' do
+    post '/products', params: { product: product_params }
+
+    expect(response).to redirect_to('/admin')
+    expect(Product.find_by!(name: 'Imperial Stout').categories).to be_empty
+  end
+
+  it 'removes every category when none is ticked' do
+    ipa.categories << stouts
+
+    patch "/products/#{ipa.id}", params: { product: product_params }
+
+    expect(ipa.reload.categories).to be_empty
+  end
+
+  it 'leaves the categories alone when an update is refused' do
+    lagers = Category.create!(name: 'Lagers')
+    ipa.categories << stouts
+
+    patch "/products/#{ipa.id}", params: { product: product_params.merge(product_image: ''), category_ids: [lagers.id] }
+
+    expect(ipa.reload.categories).to eq([stouts])
+  end
+
   it 'creates and renames a category' do
     post '/categories', params: { category: { name: 'Lagers' } }
     lagers = Category.find_by!(name: 'Lagers')

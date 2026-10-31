@@ -12,12 +12,7 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
-    @categories_id = params[:category_ids]
     if @product.save
-      @categories_id.each do |category_id|
-        category = Category.find(category_id)
-        @product.categories << category
-      end
       flash[:success] = "Product successfully created!"
       redirect_to "/admin"
     else
@@ -39,8 +34,6 @@ class ProductsController < ApplicationController
 
   def update
     @product = Product.find(params[:id])
-    @categories_id = params[:category_ids]
-    params[:product][:category_ids] = params[:category_ids]
     if @product.update(product_params)
       flash[:success] = "Product successfully updated!"
       redirect_to "/admin"
@@ -59,7 +52,8 @@ class ProductsController < ApplicationController
 
   private
   def product_params
-    params.require(:product).permit(:name, :description, :price, :quantity, :product_image, { category_ids: [] })
+    # The category checkboxes sit outside the product form, and send nothing when none is ticked.
+    params.require(:product).permit(:name, :description, :price, :quantity, :product_image).merge(category_ids: params[:category_ids] || [])
   end
 
 end
