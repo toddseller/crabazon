@@ -41,16 +41,16 @@
               .dropdown
                 %button#dropdownCategories.btn.btn-default.dropdown-toggle{ 'aria-expanded' => true, 'aria-haspopup' => true, 'data-toggle' => 'dropdown', type: 'button' }
                   %span.hida.caret
-                  %p.multiSel
+                  %p.multiSel.category-name
                 %ul.dropdown-menu{'aria-labelledby' => 'dropdownCategories'}
                   %ul.multiSelect{multiple: 'multiple'}
                     - @categories.each do |category|
                       %li
                         - if @product.categories.pluck(:id).include?(category.id)
                           %input{type: 'checkbox', value: category.id, name: 'category_ids[]', checked: 'checked'}
-                          = category.name
+                          %span.category-name= category.name
                         - else
                           %input{type: 'checkbox', value: category.id, name: 'category_ids[]'}
-                          =category.name
+                          %span.category-name= category.name
           .col-md-offset-4.col-md-8.update-button
             = f.submit 'Update Product', class: 'btn btn-primary btn-lg center-block'

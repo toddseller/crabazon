@@ -15,7 +15,10 @@ RSpec.describe 'Storefront', type: :request do
   it 'shows only its own products on a category page' do
     get "/categories/#{stouts.id}"
 
-    expect(response.body).to include('Welcome to Stouts!', 'Imperial Stout')
+    heading = Nokogiri::HTML(response.body).at('h1')
+    expect(heading.text.squish).to eq('Welcome to stouts!')
+    expect(heading.at('.category-name').text).to eq('stouts')
+    expect(response.body).to include('Imperial Stout')
     expect(response.body).not_to include('Session Lager')
   end
 

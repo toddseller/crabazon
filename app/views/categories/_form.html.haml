@@ -1,0 +1,20 @@
+.container-fluid
+  .row
+    .col-sm-12
+      = link_to 'Back', categories_path, class: 'btn btn-success admin-buttons pull-right'
+.container
+  .row
+    .col-lg-12
+      = form_for @category, html: { class: 'form-horizontal center', id: 'edit-form' } do |f|
+        %img.macrabz-admin.center-block{:alt => 'Macrabz Emporium', :src => asset_path('crabazon.svg')}
+        %h1.text-center.edit-header= title
+        .form-center
+          - if flash[:error]
+            #flash.error.text-center
+              = flash[:error]
+          .form-group
+            = f.label :name, 'Category Name:', class: 'col-lg-4 control-label'
+            .col-md-8
+              = f.text_field :name, class: 'form-control category-name'
+          .col-md-12.update-button
+            = f.submit class: 'btn btn-primary btn-lg center-block'

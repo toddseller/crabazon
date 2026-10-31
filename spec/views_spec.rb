@@ -7,4 +7,13 @@ RSpec.describe 'Views' do
 
     expect(offenders.map { |f| f.delete_prefix("#{Rails.root}/") }).to be_empty
   end
+
+  # Names are stored in lowercase; only the category-name class capitalizes them on screen.
+  it 'print category names inside the category-name class' do
+    lines = Dir[Rails.root.join('app/views/**/*.haml')].flat_map do |f|
+      File.readlines(f).each_with_index.map { |line, i| "#{f.delete_prefix("#{Rails.root}/")}:#{i + 1}: #{line.strip}" }
+    end
+
+    expect(lines.grep(/category\.name|name_was/).grep_v(/category-name/)).to be_empty
+  end
 end

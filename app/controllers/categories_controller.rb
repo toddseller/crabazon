@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  before_action :authenticate_admin!, except: [:index, :show]
+  before_action :authenticate_admin!, except: [:show]
 
   def index
     @categories = Category.sort_by_name
@@ -13,8 +13,9 @@ class CategoriesController < ApplicationController
     @category = Category.new(category_params)
     if @category.save
       flash[:success] = "Category successfully created!"
+      redirect_to categories_path
     else
-      flash[:error] = "Opps! Something went wrong. Try again!"
+      flash.now[:error] = "Opps! Something went wrong. Try again!"
       render 'new'
     end
   end
@@ -32,18 +33,17 @@ class CategoriesController < ApplicationController
     @category = Category.find(params[:id])
     if @category.update(category_params)
       flash[:success] = "Category successfully updated!"
-      redirect_to index_path
+      redirect_to categories_path
     else
-      flash[:error] = "Opps! Something went wrong. Try again!"
+      flash.now[:error] = "Opps! Something went wrong. Try again!"
       render 'edit'
     end
   end
 
   def destroy
-    @category = Category.find(params[:id])
-    if @category.destroy
-      flash[:success] = "Category successfully updated!"
-    end
+    Category.find(params[:id]).destroy
+    flash[:success] = "Category successfully deleted!"
+    redirect_to categories_path
   end
 
   private
