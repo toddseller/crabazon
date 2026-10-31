@@ -26,7 +26,7 @@ RSpec.describe 'Sessions', type: :request do
 
     sign_in_as('cara@example.com', 'wrong-password')
 
-    expect(response.body).to include('Invalid Email or password.')
+    expect(response.body).to include('Invalid email or password.')
     expect(session['warden.user.user.key']).to be_nil
   end
 end
