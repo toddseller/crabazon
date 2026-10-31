@@ -31,7 +31,7 @@ RSpec.describe 'Cart', type: :request do
   end
 
   def expect_refused
-    expect(response).to have_http_status(:unprocessable_entity)
+    expect(response).to have_http_status(:unprocessable_content)
     expect(response.parsed_body['error']).to be_present
     expect(flash[:alert]).to be_present
   end
