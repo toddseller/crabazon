@@ -16,12 +16,11 @@ var bindListeners = function() {
 var multiSelectCheckboxes = function() {
   var title = $(this).closest('.multiSelect,li').text()+',';
   if ($(this).is(':checked')) {
-    var html = '<span title="' + title + '">' + title + '</span>';
-    $('.multiSel').append(html);
+    $('.multiSel').append($('<span>').attr('title', title).text(title));
     $('.multiSel').css('text-align', 'left');
     $('.hida').hide();
   } else {
-    $('span[title="' + title + '"]').remove();
+    $('.multiSel span').filter(function() { return $(this).attr('title') === title; }).remove();
     var ret = $('.hida');
     $('.dropdown button span').append(ret);
   }
@@ -119,10 +118,10 @@ var insertProduct = function(index, product) {
 var buildRow = function(product) {
   var $row = $('<tr></tr>');
   
-  var $img = $('<img src="' + product.product_image + '"/>');
+  var $img = $('<img>').attr('src', product.product_image);
   $row.append(buildTd($img, 'admin-image'));
   
-  $row.append(buildTd(product.name));
+  $row.append(buildTd($('<span>').text(product.name)));
   
   var price = parseFloat(product.price).toFixed(2);
   $row.append(buildTd(price, 'text-center').prepend('$'));
