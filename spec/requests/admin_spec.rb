@@ -66,6 +66,13 @@ RSpec.describe 'Admin', type: :request do
     expect(ipa.reload.categories).to eq([stouts])
   end
 
+  it 'gives the product table a header cell for every column' do
+    get '/admin'
+
+    table = Nokogiri::HTML(response.body).at('table')
+    expect(table.css('thead th').size).to eq(table.at('tbody tr').css('td').size)
+  end
+
   it 'links from /admin to the category list' do
     get '/admin'
 

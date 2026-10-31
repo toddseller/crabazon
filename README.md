@@ -45,10 +45,13 @@ The site runs on the app host from a checkout of `master` in `~/crabazon`, again
 git pull
 docker tag crabazon-web:latest crabazon-web:previous
 docker compose build web
+docker compose run --rm web bin/rails db:migrate
 docker compose up -d web
 ```
 
-To roll back to the image that ran before:
+The migrate step does nothing when no migration is pending, so it runs on every deploy.
+
+To roll back to the image that ran before: if the deploy ran a migration, first run `docker compose run --rm web bin/rails db:rollback`, while the new image is still current, since the old image doesn't have the migration's code to undo it. Then:
 
 ```sh
 docker tag crabazon-web:previous crabazon-web:latest
