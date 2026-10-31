@@ -28,6 +28,20 @@ RSpec.describe 'Admin', type: :request do
     expect(Product.exists?(stout.id)).to be(false)
   end
 
+  it 'refuses to create a product without an image' do
+    expect { post '/products', params: { product: product_params.merge(product_image: ''), category_ids: [stouts.id] } }.not_to change(Product, :count)
+    expect(response.body).to include('Opps! Something went wrong')
+
+    get "/products/#{ipa.id}/edit"
+    expect(response.body).not_to include('Opps! Something went wrong')
+  end
+
+  it 'refuses to remove the image from a product' do
+    patch "/products/#{ipa.id}", params: { product: product_params.merge(product_image: ''), category_ids: [stouts.id] }
+    expect(ipa.reload.product_image).to eq('https://example.com/ipa.png')
+    expect(response.body).to include('Opps! Something went wrong')
+  end
+
   it 'creates and renames a category' do
     post '/categories', params: { category: { name: 'Lagers' } }
     lagers = Category.find_by!(name: 'Lagers')

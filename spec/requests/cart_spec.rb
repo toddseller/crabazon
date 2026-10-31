@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Cart', type: :request do
-  let!(:ipa) { Product.create!(name: 'Stone IPA', description: 'Hoppy', price: 4.5, quantity: 5) }
+  let!(:ipa) { Product.create!(name: 'Stone IPA', description: 'Hoppy', price: 4.5, quantity: 5, product_image: 'https://example.com/ipa.png') }
 
   it 'adds, counts, updates and removes a product' do
     post "/carts/#{ipa.id}", xhr: true
